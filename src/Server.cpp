@@ -3,14 +3,17 @@
 
 bool match_pattern(const std::string& input_line, const std::string& pattern) {
     
-	switch(pattern.c_str()){
-		case "\\d":
-			std::cout << "Blabla." << std::endl;
-			break;
+	
 		
-		case default:
-			throw std::runtime_error("Unhandled pattern " + pattern);
-			break;	
+	if (pattern.length() == 1) {
+		if(pattern == "\\d"){
+			return input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
+		} else {
+			return input_line.find(pattern) != std::string::npos;
+		}
+    }
+    else {
+        throw std::runtime_error("Unhandled pattern " + pattern);
 	}
 	
 	
