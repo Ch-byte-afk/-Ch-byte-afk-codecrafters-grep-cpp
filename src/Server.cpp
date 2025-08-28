@@ -2,11 +2,27 @@
 #include <string>
 
 bool match_pattern(const std::string& input_line, const std::string& pattern) {
-    if (pattern.length() == 1) {
+    
+	switch(pattern.c_str()){
+		case "\\d":
+			std::cout << "Blabla." << std::endl;
+			break;
+		
+		case default:
+			throw std::runtime_error("Unhandled pattern " + pattern);
+			break;	
+	}
+	
+	
+	
+	
+	/*
+	if (pattern.length() == 1) {
         return input_line.find(pattern) != std::string::npos;
     }
     else {
         throw std::runtime_error("Unhandled pattern " + pattern);
+	*/
     }
 }
 
