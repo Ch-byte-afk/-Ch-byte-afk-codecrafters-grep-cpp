@@ -3,10 +3,11 @@
 
 bool match_pattern(const std::string& input_line, const std::string& pattern) {
     
-	
+	std::cout << pattern << std::endl;
 		
 	if (pattern.length() == 1) {
 		if(pattern == "\\d"){
+			std::cout << "Pattern detected." << std::endl;
 			return input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
 		} else {
 			return input_line.find(pattern) != std::string::npos;
