@@ -7,7 +7,7 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	} else {
 		return input_line.find(pattern) != std::string::npos;
 	}
-}
+
 	
 	/*
 	if (pattern.length() == 1) {
