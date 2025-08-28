@@ -4,7 +4,7 @@
 bool match_pattern(const std::string& input_line, const std::string& pattern) {
     
 	std::cout << pattern << std::endl;
-	std:: cout << "\\d" << endl;
+	std:: cout << "\\d" << std::endl;
 		
 	if (pattern.length() == 1) {
 		if(pattern == "\d"){
