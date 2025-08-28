@@ -11,6 +11,7 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
     }
     else {
         throw std::runtime_error("Unhandled pattern " + pattern);
+		return false;
 	}
 	
 	
