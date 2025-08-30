@@ -20,7 +20,7 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 				return input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
 				
 			case 'w':
-				std::cout << "w" << endl;
+				std::cout << "w" << std::endl;
 				return input_line.find_first_of("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") != std::string::npos; // Return true if alpha-numeric character present. Inefficient.
 				
 			default:
