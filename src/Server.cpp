@@ -18,15 +18,13 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 		
 			case 'd':
 				return input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
-				break;
 				
 			case 'w':
-				return input_line.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") != std::string::npos; // Return true if alpha-numeric character present. Inefficient.
-				break;
+				std::cout << "w" << endl;
+				return input_line.find_first_of("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") != std::string::npos; // Return true if alpha-numeric character present. Inefficient.
 				
 			default:
 				throw std::runtime_error("Unhandled pattern " + pattern);
-				break;
 		}
 		
 	} else {
