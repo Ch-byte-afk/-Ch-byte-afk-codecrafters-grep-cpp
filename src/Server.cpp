@@ -26,7 +26,7 @@ bool handlePattern_GROUP(const std::string& input_line, const std::string& patte
 	if (end != std::string::npos) // If closing square bracket is found.
 		--end;
 		
-	if(group[0] = "^"){ 
+	if(group[0] = '^'){ 
 		return input_line.find_first_not_of(group) != std::string::npos;// Return true if any non-given characters are found.
 	} else {
 		return input_line.find_first_of(group) != std::string::npos;} // Return true if any of the given characters are found.
