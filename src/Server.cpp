@@ -2,11 +2,39 @@
 #include <string>
 
 bool match_pattern(const std::string& input_line, const std::string& pattern) {
-	if(pattern == "\\d"){
+	/*if(pattern == "\\d"){
 		return input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
 	} else {
 		return input_line.find(pattern) != std::string::npos;
+	}*/
+	
+	if (pattern.length() == 0){
+		throw std::runtime_error("Pattern cannot be blank.");
+	} else if (pattern.length() == 1) {
+        return input_line.find(pattern) != std::string::npos;
+	} else if( pattern[0] == '\\'){
+		
+		switch (pattern[1]){
+		
+			case 'd':
+				return input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
+				break;
+				
+			case 'w':
+				return input_line.find_first_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") != std::string::npos; // Return true if alpha-numeric character present. Inefficient.
+				break;
+				
+			default:
+				throw std::runtime_error("Unhandled pattern " + pattern);
+				break;
+		}
+		
+	} else {
+		throw std::runtime_error("Unhandled pattern " + pattern);
 	}
+	
+	
+	
 
 	
 	/*
