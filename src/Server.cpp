@@ -1,6 +1,41 @@
 #include <iostream>
 #include <string>
 
+bool handlePattern_MATCH(const std::string& input_line, const std::string& pattern){
+	
+	switch (pattern[1]){
+		
+		case 'd':
+			return input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
+			
+		case 'w':
+			return input_line.find_first_of("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") != std::string::npos; // Return true if alpha-numeric character present. Inefficient.
+			
+		default:
+			throw std::runtime_error("Unhandled pattern " + pattern);
+	}
+}
+
+bool handlePattern_GROUP(const std::string& input_line, const std::string& pattern){
+			
+	unsigned int start = pattern.find_first_of('[') + 1;
+	unsigned int end = pattern.find_last_of(']');
+		
+	std::string group = pattern.substr(start, end);
+		
+	if (end != std::string::npos) // If closing square bracket is found.
+		--end;
+		
+	if(group[0] = "^"){ 
+		return input_line.find_first_not_of(group) != std::string::npos;// Return true if any non-given characters are found.
+	} else {
+		return input_line.find_first_of(group) != std::string::npos;} // Return true if any of the given characters are found.
+}
+
+
+
+
+
 bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	/*if(pattern == "\\d"){
 		return input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
@@ -15,27 +50,10 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
         return input_line.find(pattern) != std::string::npos;
 		
 	} else if( pattern[0] == '\\'){
-		
-		switch (pattern[1]){
-		
-			case 'd':
-				return input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
-				
-			case 'w':
-				return input_line.find_first_of("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") != std::string::npos; // Return true if alpha-numeric character present. Inefficient.
-				
-			default:
-				throw std::runtime_error("Unhandled pattern " + pattern);
-		}
+		return handlePattern_MATCH(input_line, pattern);
+
 	} else if(pattern[0] == '['){
-		
-		unsigned int start = pattern.find_first_of('[') + 1;
-		unsigned int end = pattern.find_last_of(']');
-		
-		if (end != std::string::npos) // If closing square bracket is found.
-			--end;
-		
-		return input_line.find_first_of(pattern.substr(start, end)) != std::string::npos; // Return true if any of the given characters are found.
+		return handlePattern_GROUP(input_line, pattern);
 		
 	} else {
 		throw std::runtime_error("Unhandled pattern " + pattern);
