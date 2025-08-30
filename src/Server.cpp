@@ -35,7 +35,7 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 		if (end != std::string::npos) // If closing square bracket is found.
 			--end;
 		
-		return(input_line.find_first_of(pattern.substr(start, end)) != std::string::npos; // Return true if any of the given characters are found.
+		return input_line.find_first_of(pattern.substr(start, end)) != std::string::npos; // Return true if any of the given characters are found.
 		
 	} else {
 		throw std::runtime_error("Unhandled pattern " + pattern);
