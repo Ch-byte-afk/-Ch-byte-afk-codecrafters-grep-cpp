@@ -10,8 +10,10 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	
 	if (pattern.length() == 0){
 		throw std::runtime_error("Pattern cannot be blank.");
+		
 	} else if (pattern.length() == 1) {
         return input_line.find(pattern) != std::string::npos;
+		
 	} else if( pattern[0] == '\\'){
 		
 		switch (pattern[1]){
@@ -20,12 +22,20 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 				return input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
 				
 			case 'w':
-				std::cout << "w" << std::endl;
 				return input_line.find_first_of("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") != std::string::npos; // Return true if alpha-numeric character present. Inefficient.
 				
 			default:
 				throw std::runtime_error("Unhandled pattern " + pattern);
 		}
+	} else if(pattern[0] == '['){
+		
+		unsigned int start = pattern.find_first_of('[') + 1;
+		unsigned int end = pattern.find_last_of(']');
+		
+		if (end != std::string::npos) // If closing square bracket is found.
+			--end;
+		
+		return(input_line.find_first_of(pattern.substr(start, end)) != std::string::npos; // Return true if any of the given characters are found.
 		
 	} else {
 		throw std::runtime_error("Unhandled pattern " + pattern);
