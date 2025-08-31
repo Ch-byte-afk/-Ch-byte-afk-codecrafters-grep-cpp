@@ -70,7 +70,7 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	int curIndex = 0;
 	
 	do{
-		if (matchHere(input_line.substr(curIndex), pattern) // Run once even if input_line is "". If pattern == "" and input_line == "", still returns true.
+		if (matchHere(input_line.substr(curIndex), pattern)) // Run once even if input_line is "". If pattern == "" and input_line == "", still returns true.
 			return 1;
 		
 	} while (input_line[++curIndex] != '\0');
