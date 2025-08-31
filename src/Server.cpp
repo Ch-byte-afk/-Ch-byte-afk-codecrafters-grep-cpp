@@ -18,7 +18,7 @@ bool handlePattern_MATCH(const std::string& input_line, const std::string& patte
 			return std::isdigit(input_line[0]);       // input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
 			
 		case 'w':
-			return std::isalnum(input_line[0]); // Return true if alpha-numeric character present. Inefficient.
+			return std::isalnum(input_line[0]) || input_line[0] == '_'; // Return true if alpha-numeric character present. Inefficient.
 			
 		default:
 			throw std::runtime_error("Unhandled pattern " + pattern);
