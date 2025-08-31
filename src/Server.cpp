@@ -53,7 +53,7 @@ bool matchHere(const std::string& input_line, const std::string& pattern){
 			for(lastIndex = 0; input_line[lastIndex] != '\n' && matchHere(input_line.substr(lastIndex), pattern.substr(0, 1)); lastIndex++);
 			
 			if (matchHere(input_line.substr(lastIndex), pattern.substr(0, 1))){
-				return matchHere(matchHere(input_line.substr(lastIndex), pattern.substr(2)));
+				return matchHere(input_line.substr(lastIndex), pattern.substr(2));
 			}
 		}
 		return 0;
