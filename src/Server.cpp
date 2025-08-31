@@ -45,21 +45,33 @@ bool matchHere(const std::string& input_line, const std::string& pattern){
 		if (pattern.length() == 0){
 		return 1;
 	}
-	 
-	if (pattern[0] == '\\' && handlePattern_MATCH(input_line, pattern)){ // Step pattern by 2 to account for backslash (\) character.
-		return matchHere(input_line.substr(1), pattern.substr(2));
-	} 
 	
-	if (pattern[0] == '[' && handlePattern_GROUP(input_line, pattern)){
-		return matchHere(input_line.substr(1), pattern.substr(pattern.find_last_of(']') + 1));
+	switch(pattern[0]){
+	
+		case '\\':
+			if (handlePattern_MATCH(input_line, pattern)){ // Step pattern by 2 to account for backslash (\) character.
+				return matchHere(input_line.substr(1), pattern.substr(2));
+			} 
 		
-	}
-	
-	if (pattern[0] != '\\' && pattern[0] != '[' && pattern[0] == input_line[0]) { // Switch statement may help reduce complexity in the future.
-		return matchHere(input_line.substr(1), pattern.substr(1));
+		case '[':
+			if (handlePattern_GROUP(input_line, pattern)){
+				return matchHere(input_line.substr(1), pattern.substr(pattern.find_last_of(']') + 1));
+			
+			}
+		
+		case '$':
+			if (pattern[1] == '\0'){
+				return input_line == "";
+			}
+		
+		default:
+			if (pattern[0] == input_line[0]) { // Switch statement may help reduce complexity in the future.
+				return matchHere(input_line.substr(1), pattern.substr(1));
+			}
 	}
 	
 	return 0;
+	
 }
 
 bool match_pattern(const std::string& input_line, const std::string& pattern) {
