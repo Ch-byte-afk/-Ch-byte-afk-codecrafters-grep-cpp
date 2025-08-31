@@ -3,10 +3,7 @@
 
 
 /* 
-	Parse into individual pattern objects.
-	Recursively run through handlePattern_MATCH untill end of pattern is reached indicating success, or end of input is reached indicating failure.
-
-
+	Refactor to parse into individual class pattern objects.
 */
 
 
@@ -69,7 +66,10 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	
 	int curIndex = 0;
 	
-	do{
+	if (pattern[0] == '^'){
+		return matchHere(input_line, pattern.substr(1);
+	}
+	do {
 		if (matchHere(input_line.substr(curIndex), pattern)) // Run once even if input_line is "". If pattern == "" and input_line == "", still returns true.
 			return 1;
 		
@@ -79,75 +79,10 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	
 }
 
-/*
-bool handlePattern_MATCH(const std::string& input_line, const std::string& pattern){
-	
-	switch (pattern[1]){
-		
-		case 'd':
-			return match_pattern(input_line.substr(1), pattern.substr(2));       // input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
-			
-		case 'w':
-			return input_line.find_first_of("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") != std::string::npos; // Return true if alpha-numeric character present. Inefficient.
-			
-		default:
-			throw std::runtime_error("Unhandled pattern " + pattern);
-	}
-}
-
-bool handlePattern_GROUP(const std::string& input_line, const std::string& pattern){
-			
-	unsigned int start = pattern.find_first_of('[') + 1;
-	unsigned int end = pattern.find_last_of(']');
-		
-	if (end != std::string::npos) // If closing square bracket is found.
-		--end;
-	
-	std::string group = pattern.substr(start, end);
-	std::cout << group << std::endl;
-		
-	if(group[0] == '^'){ 
-		return input_line.find_first_not_of(group) != std::string::npos;// Return true if any non-given characters are found.
-	} else {
-		return input_line.find_first_of(group) != std::string::npos; // Return true if any of the given characters are found.
-	} 
-}
 
 
 
-
-
-bool match_pattern(const std::string& input_line, const std::string& pattern) {
-	
-	if (pattern.length() == 1) {
-        return match_pattern(                 // input_line.find(pattern) != std::string::npos;
-	} 
-	if (pattern[0] == '\\'){
-		return handlePattern_MATCH(input_line, pattern);
-	} 
-	if (pattern[0] == '['){
-		return handlePattern_GROUP(input_line, pattern);
-		
-	}
-	
-	return 0;
-}
-	
-	
-	
-
-	
-	
-	if (pattern.length() == 1) {
-        return input_line.find(pattern) != std::string::npos;
-    }
-    else {
-        throw std::runtime_error("Unhandled pattern " + pattern);
-    }
-	
-}
-*/
-
+//Default code:
 
 int main(int argc, char* argv[]) {
     // Flush after every std::cout / std::cerr
@@ -171,7 +106,6 @@ int main(int argc, char* argv[]) {
     }
 
     // Uncomment this block to pass the first stage
-    //
     std::string input_line;
     std::getline(std::cin, input_line);
     
