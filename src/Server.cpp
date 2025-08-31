@@ -47,7 +47,7 @@ bool matchHere(const std::string& input_line, const std::string& pattern){
 	}
 	
 	if (pattern[1] == '+'){
-		if (matchHere(input_line, pattern.substr(0, 1)){
+		if (matchHere(input_line, pattern.substr(0, 1))){
 			
 			unsigned int lastIndex;
 			for(lastIndex = 0; input_line[lastIndex] != '\n' && matchHere(input_line.substr(lastIndex), pattern.substr(0, 1)); lastIndex++);
@@ -55,7 +55,7 @@ bool matchHere(const std::string& input_line, const std::string& pattern){
 			if (matchHere(input_line.substr(lastIndex), pattern.substr(0, 1))){
 				return matchHere(matchHere(input_line.substr(lastIndex), pattern.substr(2));
 			}
-		} 
+		}
 		return 0;
 	}
 	
