@@ -54,11 +54,11 @@ bool matchHere(const std::string& input_line, const std::string& pattern){
 	}
 	 
 	if (pattern[0] == '\\' && handlePattern_MATCH(input_line, pattern)){ // Step pattern by 2 to account for backslash (\) character.
-		return MatchHere(input_line.substr(1), pattern.substr(2));
+		return matchHere(input_line.substr(1), pattern.substr(2));
 	} 
 	
-	if (pattern[0] == '[' && handlePattern_GROUP(input_line, pattern); ){
-		return matchHere(input_line.substr(1), pattern.susbtr(pattern.find_last_of(']') + 1));
+	if (pattern[0] == '[' && handlePattern_GROUP(input_line, pattern)){
+		return matchHere(input_line.substr(1), pattern.substr(pattern.find_last_of(']') + 1));
 		
 	}
 	
@@ -70,7 +70,7 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	int curIndex = 0;
 	
 	do{
-		if matchHere(input_line.substr(curIndex), pattern) // Run once even if input_line is "". If pattern == "" and input_line == "", still returns true.
+		if (matchHere(input_line.substr(curIndex), pattern) // Run once even if input_line is "". If pattern == "" and input_line == "", still returns true.
 			return 1;
 		
 	} while (input_line[++curIndex] != '\0');
