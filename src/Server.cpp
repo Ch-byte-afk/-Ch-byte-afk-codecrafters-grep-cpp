@@ -67,7 +67,7 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	int curIndex = 0;
 	
 	if (pattern[0] == '^'){
-		return matchHere(input_line, pattern.substr(1);
+		return matchHere(input_line, pattern.substr(1));
 	}
 	do {
 		if (matchHere(input_line.substr(curIndex), pattern)) // Run once even if input_line is "". If pattern == "" and input_line == "", still returns true.
