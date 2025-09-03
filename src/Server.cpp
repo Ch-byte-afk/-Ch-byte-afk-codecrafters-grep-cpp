@@ -69,7 +69,7 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 			break;
 		
 		case Expression::WORD:
-			if(std::is_alnum(input_line[0]) || input_line[0] == '_'){
+			if(std::isalnum(input_line[0]) || input_line[0] == '_'){
 				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
@@ -86,9 +86,9 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 		case Expression::UNDEFINED:
 			
 			
+	}
 		
-		
-		return 0;
+	return 0;
 		/*
 		case '\\':
 			if (handlePattern_MATCH(input_line, pattern)){ // Step pattern by 2 to account for backslash (\) character.
