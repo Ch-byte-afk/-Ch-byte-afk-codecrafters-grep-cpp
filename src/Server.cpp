@@ -132,7 +132,7 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 		if (matchHere(input_line.substr(index), currExp)) // Run once even if input_line is "". If pattern == "" and input_line == "", still returns true.
 			return 1;
 		
-	} while (input_line[++curIndex] != '\0');
+	} while (input_line[++index] != '\0');
 	
 	return 0;
 	
