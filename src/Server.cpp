@@ -47,10 +47,6 @@ bool matchHere(const std::string& input_line, const std::string& pattern){
 		return 1;
 	}
 	
-	if (pattern[1] == '+'){
-		
-	
-	
 	switch(pattern[0]){
 	
 		case '\\':
