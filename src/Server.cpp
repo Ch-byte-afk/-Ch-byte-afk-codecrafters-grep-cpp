@@ -85,6 +85,7 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 			
 		case Expression::UNDEFINED:
 			
+			break;
 			
 	}
 		
@@ -119,7 +120,7 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	std::vector<Expression> expressions = parsePattern(pattern);
 	
 	int index = 0;
-	std::vector<expression>::iterator currExp = expressions.begin();
+	std::vector<Expression>::iterator currExp = expressions.begin();
 	
 	if (expressions[0].type == Expression::ANCHOR_START){
 		return matchHere(input_line, ++currExp);
