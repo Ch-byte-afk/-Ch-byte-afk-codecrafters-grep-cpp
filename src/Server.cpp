@@ -52,38 +52,38 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 
 	// Expression[1] == one or more.
 	
-	switch(*currExp.type){
+	switch((*currExp).type){
 		
-		case expressions::EXACT:
+		case expression::EXACT:
 			if((*currExp).typeString[0] == input_line[0]){
 				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
 			break;
 			
-		case expressions::DIGIT:
+		case expression::DIGIT:
 			if(std::is_digit(input_line[0])){
 				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
 			break;
 		
-		case expressions::WORD:
+		case expression::WORD:
 			if(std::is_alnum(input_line[0]) || input_line[0] == '_'){
 				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
 			break;
 		
-		case expressions::GROUP_START:
+		case expression::GROUP_START:
 		
 			break;
 			
-		case expressions::ANCHOR_END:
+		case expression::ANCHOR_END:
 		
 			break;
 			
-		case expressions::UNDEFINED:
+		case expression::UNDEFINED:
 			
 			
 		
