@@ -41,14 +41,55 @@ bool handlePattern_GROUP(const std::string& input_line, const std::string& patte
 	} 
 }
 
+bool matchGroup(std::string& input_line, std::vector<Expression>::iterator currExp){}
 
-bool matchHere(const std::string& input_line, const std::string& pattern){
-		if (pattern.length() == 0){
+
+
+bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
+	if (*currExp.type == expressions::END_OF_FILE){
 		return 1;
 	}
+
+	// Expression[1] == one or more.
 	
-	switch(pattern[0]){
-	
+	switch(*currExp.type){
+		
+		case expressions::EXACT:
+			if(*currExp.typeString[0] == input_line[0]){
+				return matchHere(input_line.substr(1), currExp + 1);
+			}
+			
+			break;
+			
+		case expressions::DIGIT:
+			if(std::is_digit(input_line[0])){
+				return matchHere(input_line.substr(1), currExp + 1);
+			}
+			
+			break;
+		
+		case expressions::WORD:
+			if(std::is_alnum(input_line[0]) || input_line[0] == '_'){
+				return matchHere(input_line.substr(1), currExp + 1);
+			}
+			
+			break;
+		
+		case expressions::GROUP_START:
+		
+			break;
+			
+		case expressions::ANCHOR_END:
+		
+			break;
+			
+		case expressions::UNDEFINED:
+			
+			
+		
+		
+		return 0;
+		/*
 		case '\\':
 			if (handlePattern_MATCH(input_line, pattern)){ // Step pattern by 2 to account for backslash (\) character.
 				return matchHere(input_line.substr(1), pattern.substr(2));
@@ -69,20 +110,25 @@ bool matchHere(const std::string& input_line, const std::string& pattern){
 				return matchHere(input_line.substr(1), pattern.substr(1));
 			}
 	}
+	*/
 	
-	return 0;
 	
 }
 
 bool match_pattern(const std::string& input_line, const std::string& pattern) {
+	std::vector<Expression> expressions = parsePattern(pattern);
 	
-	int curIndex = 0;
+	int index = 0;
+	std::vector<expression>::iterator currExp = expressions.begin();
 	
-	if (pattern[0] == '^'){
-		return matchHere(input_line, pattern.substr(1));
+	if (expressions[0].type == Expression::ANCHOR_START){
+		return matchHere(input_line, ++currExp);
 	}
 	do {
-		if (matchHere(input_line.substr(curIndex), pattern)) // Run once even if input_line is "". If pattern == "" and input_line == "", still returns true.
+		
+		currExp = expressions.begin() + index;
+		
+		if (matchHere(input_line.substr(index), currExp)) // Run once even if input_line is "". If pattern == "" and input_line == "", still returns true.
 			return 1;
 		
 	} while (input_line[++curIndex] != '\0');
