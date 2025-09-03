@@ -41,12 +41,12 @@ bool handlePattern_GROUP(const std::string& input_line, const std::string& patte
 	} 
 }
 
-bool matchGroup(std::string& input_line, std::vector<Expression>::iterator currExp){}
+//bool matchGroup(std::string& input_line, std::vector<Expression>::iterator currExp){}
 
 
 
 bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
-	if (*currExp.type == expressions::END_OF_FILE){
+	if ((*currExp).type == expressions::END_OF_FILE){
 		return 1;
 	}
 
@@ -55,7 +55,7 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 	switch(*currExp.type){
 		
 		case expressions::EXACT:
-			if(*currExp.typeString[0] == input_line[0]){
+			if((*currExp).typeString[0] == input_line[0]){
 				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
