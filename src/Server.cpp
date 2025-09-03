@@ -46,7 +46,7 @@ bool handlePattern_GROUP(const std::string& input_line, const std::string& patte
 
 
 bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
-	if ((*currExp).type == expressions::END_OF_FILE){
+	if ((*currExp).type == Expression::END_OF_FILE){
 		return 1;
 	}
 
@@ -54,36 +54,36 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 	
 	switch((*currExp).type){
 		
-		case expression::EXACT:
+		case Expression::EXACT:
 			if((*currExp).typeString[0] == input_line[0]){
 				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
 			break;
 			
-		case expression::DIGIT:
-			if(std::is_digit(input_line[0])){
+		case Expression::DIGIT:
+			if(std::isdigit(input_line[0])){
 				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
 			break;
 		
-		case expression::WORD:
+		case Expression::WORD:
 			if(std::is_alnum(input_line[0]) || input_line[0] == '_'){
 				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
 			break;
 		
-		case expression::GROUP_START:
+		case Expression::GROUP_START:
 		
 			break;
 			
-		case expression::ANCHOR_END:
+		case Expression::ANCHOR_END:
 		
 			break;
 			
-		case expression::UNDEFINED:
+		case Expression::UNDEFINED:
 			
 			
 		
