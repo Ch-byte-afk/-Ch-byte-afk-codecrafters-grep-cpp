@@ -65,7 +65,7 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 			break;
 		
 		case Expression::GROUP_START:
-			return(matchGroup(input_line, currExp)){
+			return matchGroup(input_line, currExp);
 				
 			
 		case Expression::GROUP_END:
