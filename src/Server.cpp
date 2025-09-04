@@ -11,8 +11,6 @@ bool matchOOM(const std::string& input_line, const std::vector<Expression>::iter
 	std::vector<Expression> subExp = {*currExp, Expression("\0")};
 	std::vector<Expression>::iterator subIt = subExp.begin();
 	
-	std::cout << "Entered OOM." << std::endl;
-	
 	int index = 0;
 	
 	while(matchHere(input_line.substr(index), subIt)){
@@ -21,7 +19,6 @@ bool matchOOM(const std::string& input_line, const std::vector<Expression>::iter
 	
 	while(index != 0){ //mathHere returned true at least 1 time.
 		index--;
-		std::cout << "Found valid index." << std::endl;
 		
 		if (matchHere(input_line.substr(index + 1), currExp + 2))
 			return 1;
@@ -43,15 +40,9 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 	
 	do{
 		if (matchHere(input_line, currExp + index) != inverted){ // If match fails and meaning is inverted, or match succeed and meaning isn't inverted.
-			while ((*(currExp + index)).type != Expression::GROUP_END && (*(currExp + index + 1)).type != Expression::END_OF_FILE){
-				index++;
-			}
-			std::cout << "End of group found: " << (*(currExp + index)).typeString << std::endl;
-				
-			return matchHere(input_line.substr(1), currExp + 1);
+			return 1;
 		}
-		
-	} while ((*(currExp + ++index)).type != Expression::GROUP_END && (*(currExp + index)).type != Expression::END_OF_FILE);
+	} while ((*(currExp + ++index)).type != Expression::GROUP_END && (*(currExp + index + 1)).type != Expression::END_OF_FILE);
 	
 	return 0;
 }
@@ -133,7 +124,6 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	int index = 0;
 	std::vector<Expression>::iterator currExp = expressions.begin();
 	
-	std::cout << expressions[0].type << std::endl;
 	if (expressions[0].type == Expression::ANCHOR_START){
 		return matchHere(input_line, currExp + 1);
 	}
