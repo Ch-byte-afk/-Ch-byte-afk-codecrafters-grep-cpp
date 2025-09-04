@@ -20,7 +20,7 @@ bool matchOOM(const std::string& input_line, const std::vector<Expression>::iter
 	while(index != 0){ //mathHere returned true at least 1 time.
 		index--;
 		
-		if(matchHere(input_line.substr(index), currExp + 2)
+		if (matchHere(input_line.substr(index), currExp + 2))
 			return 1;
 	}
 	
@@ -60,7 +60,7 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 	}
 
 	// Expression[1] == one or more.
-	Expression nextExp = currExp + 1;
+	std::vector<Expression>::iterator nextExp = currExp + 1;
 	switch((*nextExp).type){
 		
 		case Expression::MATCH_ONE_OR_MORE:
