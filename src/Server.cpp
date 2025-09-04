@@ -111,7 +111,7 @@ bool matchHere(const std::string& input_line, std::vector<Expression>::iterator&
 			break;
 			
 		case Expression::UNDEFINED:
-			throw std::runtime_error("Unhandled pattern " + pattern);
+			throw std::runtime_error("Unhandled pattern " + (*currExp).typeString);
 			break;
 			
 	}
