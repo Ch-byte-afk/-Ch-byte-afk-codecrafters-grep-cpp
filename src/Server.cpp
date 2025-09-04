@@ -23,7 +23,7 @@ bool matchOOM(const std::string& input_line, const std::vector<Expression>::iter
 		index--;
 		std::cout << "Found valid index." << std::endl;
 		
-		if (matchHere(input_line.substr(index), currExp + 2))
+		if (matchHere(input_line.substr(index + 1), currExp + 2))
 			return 1;
 	}
 	
@@ -58,7 +58,7 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 
 
 bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
-	std:: cout << "Entered function: matchHere with an input line of: " << input_line << "\n And a current expression of: " << (*currExp).typeString << std:: endl;
+	std::cout << "Entered function: matchHere with an input line of: " << input_line << "\n And a current expression of: " << (*currExp).typeString << std::endl;
 	
 	if ((*currExp).type == Expression::END_OF_FILE){
 		return 1;
