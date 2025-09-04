@@ -31,6 +31,7 @@ bool matchOOM(const std::string& input_line, const std::vector<Expression>::iter
 }
 
 bool matchGroup(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
+	std::cout << "Entered matchGroup." << std::endl;
 	
 	std::vector<Expression> subExp = {*(currExp + 1), Expression("\0")};
 	std::vector<Expression>::iterator subIt = subExp.begin();
@@ -38,6 +39,7 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 	bool inverted = 0;
 	
 	if((*currExp).typeString == "^"){
+		std::cout << "Meaning inverted." << std::endl;
 		inverted = 1;
 		subIt++;
 	}
@@ -47,6 +49,7 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 			while ((*subIt).type != Expression::GROUP_END && (*(subIt + 1)).type != Expression::END_OF_FILE){
 				subIt++;
 			}
+			std::cout << "End of group found: " << (*subIt).typeString << std::endl;
 				
 			return matchHere(input_line.substr(1), subIt + 1);
 		}
