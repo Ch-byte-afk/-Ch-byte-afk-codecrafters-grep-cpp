@@ -113,6 +113,8 @@ bool matchHere(const std::string& input_line, std::vector<Expression>::iterator&
 			return matchHere(input_line, currExp++);
 			
 		case Expression::ANCHOR_END:
+			//
+		
 			if((*(currExp + 1)).type == Expression::END_OF_FILE){
 				return input_line == "";
 			}	
