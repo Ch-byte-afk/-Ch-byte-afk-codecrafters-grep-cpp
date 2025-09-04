@@ -31,30 +31,27 @@ bool matchOOM(const std::string& input_line, const std::vector<Expression>::iter
 }
 
 bool matchGroup(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
-	std::cout << "Entered matchGroup." << std::endl;
-	
 	std::vector<Expression> subExp = {*(currExp + 1), Expression("\0")};
-	std::vector<Expression>::iterator subIt = subExp.begin();
+	int index = 1;
 	
 	bool inverted = 0;
 	
-	if((*subIt).typeString == "^"){
-		std::cout << "Meaning inverted." << std::endl;
+	if((*(subExp.begin() + 1).typeString == "^"){
 		inverted = 1;
-		subIt++;
+		index++;
 	}
 	
 	do{
-		if (matchHere(input_line, subIt) != inverted){
-			while ((*subIt).type != Expression::GROUP_END && (*(subIt + 1)).type != Expression::END_OF_FILE){
-				subIt++;
+		if (matchHere(input_line, currExp + index) != inverted){ // If match fails and meaning is inverted, or match succeed and meaning isn't inverted.
+			while ((*(currExp + index)).type != Expression::GROUP_END && (*(currExp + index + 1)).type != Expression::END_OF_FILE){
+				index++;
 			}
-			std::cout << "End of group found: " << (*subIt).typeString << std::endl;
+			std::cout << "End of group found: " << (*(currExp + index)).typeString << std::endl;
 				
-			return matchHere(input_line.substr(1), subIt + 1);
+			return matchHere(input_line.substr(1), currExp + 1);
 		}
 		
-	} while ((*(++subIt)).type != Expression::GROUP_END && (*(subIt + 1)).type != Expression::END_OF_FILE);
+	} while ((*(currExp + ++index)).type != Expression::GROUP_END && (*(currExp + index)).type != Expression::END_OF_FILE);
 	
 	return 0;
 }
