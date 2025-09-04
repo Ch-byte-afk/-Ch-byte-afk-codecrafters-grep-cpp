@@ -89,6 +89,9 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 		}
 	}
 	
+	std::cout << "MIDDLE TYPE: " << (*middle).typeString << std::endl;
+		std::cout << "END TYPE: " << (*end).typeString << std::endl;
+	
 	while((*(end++)).type != Expression::EITHER_OR_END){
 		if(((*end).type == Expression::END_OF_FILE) || ((*middle).type == Expression::UNDEFINED)){
 			return 0;
