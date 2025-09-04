@@ -41,7 +41,27 @@ bool handlePattern_GROUP(const std::string& input_line, const std::string& patte
 	} 
 }
 
-//bool matchGroup(std::string& input_line, std::vector<Expression>::iterator currExp){}
+bool matchGroup(std::string& input_line, std::vector<Expression>::iterator& currExp){
+	
+	std::vector<Expression> subExp = {*(currExp++), Expression('\0')};
+	std::vector<Expression>::iterator subIt = subExp.begin();
+	
+	bool inverted = 0;
+	
+	if((*currExp).typeString == "^"){
+		inverted = 1;
+		subIt++;
+	}
+	
+	do{
+		if (matchHere(input_line, subIt) == inverted){
+			return 1;
+		}
+		
+	} while ();
+	
+	return 0;
+}
 
 
 
@@ -76,15 +96,21 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 			break;
 		
 		case Expression::GROUP_START:
-		
+			if(matchGroup(input_line, currExp){
+				return matchHere(input_line.substr(1), currExp + 1);
+			}
+			
 			break;
 			
 		case Expression::ANCHOR_END:
-		
+			if((*(currExp + 1)).type == Expression::END_OF_FILE){
+				return input_line == "";
+			}	
+			
 			break;
 			
 		case Expression::UNDEFINED:
-			
+			throw std::runtime_error("Unhandled pattern " + pattern);
 			break;
 			
 	}
