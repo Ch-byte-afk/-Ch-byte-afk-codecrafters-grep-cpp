@@ -8,7 +8,7 @@
 */
 bool matchHere(const std::string& input_line, std::vector<Expression>::iterator& currExp);
 
-
+/*
 bool handlePattern_MATCH(const std::string& input_line, const std::string& pattern){
 	
 	switch (pattern[1]){
@@ -41,6 +41,7 @@ bool handlePattern_GROUP(const std::string& input_line, const std::string& patte
 		return input_line.find_first_of(group) != std::string::npos; // Return true if any of the given characters are found.
 	} 
 }
+*/
 
 bool matchGroup(const std::string& input_line, std::vector<Expression>::iterator& currExp){
 	
@@ -77,31 +78,39 @@ bool matchHere(const std::string& input_line, std::vector<Expression>::iterator&
 		
 		case Expression::EXACT:
 			if((*currExp).typeString[0] == input_line[0]){
-				return matchHere(input_line.substr(1), currExp + 1);
+				return matchHere(input_line.substr(1), currExp++);
 			}
 			
 			break;
 			
 		case Expression::DIGIT:
 			if(std::isdigit(input_line[0])){
-				return matchHere(input_line.substr(1), currExp + 1);
+				return matchHere(input_line.substr(1), currExp++);
 			}
 			
 			break;
 		
 		case Expression::WORD:
 			if(std::isalnum(input_line[0]) || input_line[0] == '_'){
-				return matchHere(input_line.substr(1), currExp + 1);
+				return matchHere(input_line.substr(1), currExp++);
 			}
 			
 			break;
 		
 		case Expression::GROUP_START:
 			if(matchGroup(input_line, currExp)){
-				return matchHere(input_line.substr(1), currExp + 1);
+				while((*currExp).type != Expression::GROUP_END || (*currExp).type != Expression::END_OF_FILE){
+					currExp++;
+				}
+				
+				return matchHere(input_line.substr(1), currExp);
+				
 			}
 			
 			break;
+			
+		case Expression::GROUP_END:
+			return matchHere(input_line, currExp++);
 			
 		case Expression::ANCHOR_END:
 			if((*(currExp + 1)).type == Expression::END_OF_FILE){
