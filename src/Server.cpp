@@ -35,7 +35,7 @@ matchZOO(const std::string& input_line, const std::vector<Expression>::iterator&
 	
 	int index = 0;
 	
-	if matchHere(input_line, subIt){
+	if (matchHere(input_line, subIt)){
 		return matchHere(input_line.substr(1), currExp + 2);
 	}
 	return matchHere(input_line, currExp + 2);
