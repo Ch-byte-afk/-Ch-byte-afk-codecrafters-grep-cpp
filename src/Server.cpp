@@ -40,7 +40,7 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 	
 	do{
 		if (matchHere(input_line, currExp + index)){
-			return 1;
+			return 1 != inverted;
 		}
 	} while ((*(currExp + ++index)).type != Expression::GROUP_END && (*(currExp + index + 1)).type != Expression::END_OF_FILE);
 	
