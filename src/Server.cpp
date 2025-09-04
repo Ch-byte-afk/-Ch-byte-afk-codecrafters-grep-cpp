@@ -112,8 +112,6 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 			return matchHere(input_line, currExp + 1);
 			
 		case Expression::ANCHOR_END:
-			//
-		
 			if((*(currExp + 1)).type == Expression::END_OF_FILE){
 				return input_line == "";
 			}	
@@ -139,9 +137,6 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 		return matchHere(input_line, currExp++);
 	}
 	do {
-		
-		currExp = expressions.begin() + index;
-		
 		if (matchHere(input_line.substr(index), currExp)) // Run once even if input_line is "". If pattern == "" and input_line == "", still returns true.
 			return 1;
 		
