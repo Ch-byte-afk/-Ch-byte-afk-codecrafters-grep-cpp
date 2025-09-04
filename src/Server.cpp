@@ -3,49 +3,13 @@
 
 #include "regEx.h"
 
-/* 
-	Refactor to parse into individual class pattern objects.
-*/
-bool matchHere(const std::string& input_line, std::vector<Expression>::iterator& currExp);
 
-/*
-bool handlePattern_MATCH(const std::string& input_line, const std::string& pattern){
-	
-	switch (pattern[1]){
-		
-		case 'd':
-			return std::isdigit(input_line[0]);       // input_line.find_first_of("0123456789") != std::string::npos; // Return true if digit is present.
-			
-		case 'w':
-			return std::isalnum(input_line[0]) || input_line[0] == '_'; // Return true if alpha-numeric character present. Inefficient.
-			
-		default:
-			throw std::runtime_error("Unhandled pattern " + pattern);
-	}
-}
+bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp);
 
-bool handlePattern_GROUP(const std::string& input_line, const std::string& pattern){
-			
-	unsigned int start = pattern.find_first_of('[') + 1;
-	unsigned int end = pattern.find_last_of(']');
-		
-	if (end != std::string::npos) // If closing square bracket is found.
-		--end;
-	
-	std::string group = pattern.substr(start, end);
-	std::cout << group << std::endl;
-		
-	if(group[0] == '^'){ 
-		return input_line.find_first_not_of(group) != std::string::npos;// Return true if any non-given characters are found.
-	} else {
-		return input_line.find_first_of(group) != std::string::npos; // Return true if any of the given characters are found.
-	} 
-}
-*/
 
-bool matchGroup(const std::string& input_line, std::vector<Expression>::iterator& currExp){
+bool matchGroup(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
 	
-	std::vector<Expression> subExp = {*(currExp++), Expression("\0")};
+	std::vector<Expression> subExp = {*(currExp + 1), Expression("\0")};
 	std::vector<Expression>::iterator subIt = subExp.begin();
 	
 	bool inverted = 0;
@@ -56,18 +20,21 @@ bool matchGroup(const std::string& input_line, std::vector<Expression>::iterator
 	}
 	
 	do{
-		if (matchHere(input_line, subIt) == inverted){
-			return 1;
+		if (matchHere(input_line, subIt) != inverted){
+			while ((*subIt).type != Expression::GROUP_END && (*(subIt + 1)).type != Expression::END_OF_FILE){
+				subIt++;
+			}
+				
+			return matchHere(input_line.substr(1), subIt + 1);
 		}
 		
-	} while ((*subIt).type != Expression::GROUP_END && (*subIt).type != Expression::END_OF_FILE);
+	} while ((*(++subIt)).type != Expression::GROUP_END && (*(subIt + 1)).type != Expression::END_OF_FILE);
 	
 	return 0;
 }
 
 
-
-bool matchHere(const std::string& input_line, std::vector<Expression>::iterator& currExp){
+bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
 	if ((*currExp).type == Expression::END_OF_FILE){
 		return 1;
 	}
@@ -78,39 +45,31 @@ bool matchHere(const std::string& input_line, std::vector<Expression>::iterator&
 		
 		case Expression::EXACT:
 			if((*currExp).typeString[0] == input_line[0]){
-				return matchHere(input_line.substr(1), currExp++);
+				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
 			break;
 			
 		case Expression::DIGIT:
 			if(std::isdigit(input_line[0])){
-				return matchHere(input_line.substr(1), currExp++);
+				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
 			break;
 		
 		case Expression::WORD:
 			if(std::isalnum(input_line[0]) || input_line[0] == '_'){
-				return matchHere(input_line.substr(1), currExp++);
+				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
 			break;
 		
 		case Expression::GROUP_START:
-			if(matchGroup(input_line, currExp)){
-				while((*currExp).type != Expression::GROUP_END || (*currExp).type != Expression::END_OF_FILE){
-					currExp++;
-				}
+			return(matchGroup(input_line, currExp)){
 				
-				return matchHere(input_line.substr(1), currExp);
-				
-			}
-			
-			break;
 			
 		case Expression::GROUP_END:
-			return matchHere(input_line, currExp++);
+			return matchHere(input_line, currExp + 1);
 			
 		case Expression::ANCHOR_END:
 			//
