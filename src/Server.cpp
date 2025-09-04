@@ -11,14 +11,18 @@ bool matchOOM(const std::string& input_line, const std::vector<Expression>::iter
 	std::vector<Expression> subExp = {*currExp, Expression("\0")};
 	std::vector<Expression>::iterator subIt = subExp.begin();
 	
+	std::cout << "Entered OOM." << std::endl;
+	
 	int index = 0;
 	
 	while(matchHere(input_line.substr(index), subIt)){
+		std::cout << "Entered Iteration Loop." << std::endl;
 		index++;
 	}
 	
 	while(index != 0){ //mathHere returned true at least 1 time.
 		index--;
+		std::cout << "Found valid index." << std::endl;
 		
 		if (matchHere(input_line.substr(index), currExp + 2))
 			return 1;
