@@ -53,6 +53,7 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 			if(!matchHere(input_line, subVec.begin()) && input_line != ""){
 				return 1;
 			}
+			index++;
 		}
 	}
 	
