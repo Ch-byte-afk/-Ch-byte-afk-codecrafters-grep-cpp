@@ -38,7 +38,7 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 	
 	bool inverted = 0;
 	
-	if((*currExp).typeString == "^"){
+	if((*subExp).typeString == "^"){
 		std::cout << "Meaning inverted." << std::endl;
 		inverted = 1;
 		subIt++;
