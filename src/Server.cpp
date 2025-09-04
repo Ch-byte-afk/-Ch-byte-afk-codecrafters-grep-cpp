@@ -39,7 +39,7 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 	}
 	
 	if(!inverted){
-		while((*(currExp + index)).type != Expression::GROUP_END && *(currExp + index)).type != Expression::END_OF_FILE){
+		while(((*(currExp + index)).type != Expression::GROUP_END) && ((*(currExp + index)).type != Expression::END_OF_FILE))){
 			std::vector<Expression> subVec = {currExp + index, Expression("\0")};
 			if(matchHere(input_line, subVec.begin())){
 				return 1;
@@ -48,7 +48,7 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 		}
 		
 	} else {
-		while((*(currExp + index)).type != Expression::GROUP_END && *(currExp + index)).type != Expression::END_OF_FILE){
+		while(((*(currExp + index)).type != Expression::GROUP_END) && ((*(currExp + index)).type != Expression::END_OF_FILE)){
 			std::vector<Expression> subVec = {currExp + index, Expression("\0")};
 			if(!matchHere(input_line, subVec.begin()) && input_line != ""){
 				return 1;
