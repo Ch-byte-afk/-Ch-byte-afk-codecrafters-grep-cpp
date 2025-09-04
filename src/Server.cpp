@@ -127,6 +127,10 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 			
 			break;
 		
+		case Expression::ANY:
+			if(input_line[0] != ' ' && input_line[0] != '\0')
+				return matchHere(input_line.substr(1), currExp + 1);
+		
 		case Expression::GROUP_START:
 			return matchGroup(input_line, currExp);
 				

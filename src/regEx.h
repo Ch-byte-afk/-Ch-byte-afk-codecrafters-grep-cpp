@@ -13,6 +13,7 @@ public:
 		EXACT,
 		DIGIT,
 		WORD,
+		ANY,
 		GROUP_START,
 		GROUP_END,
 		ANCHOR_START,

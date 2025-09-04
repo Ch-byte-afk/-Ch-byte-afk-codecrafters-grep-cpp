@@ -28,6 +28,9 @@ Expression::Expression(std::string expString) : typeString(expString) {
 			
 			break;
 		
+		case '.':
+			type = ANY;
+		
 		case '[':
 			type = GROUP_START;
 			break;
