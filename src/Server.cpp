@@ -43,7 +43,7 @@ bool handlePattern_GROUP(const std::string& input_line, const std::string& patte
 
 bool matchGroup(std::string& input_line, std::vector<Expression>::iterator& currExp){
 	
-	std::vector<Expression> subExp = {*(currExp++), Expression('\0')};
+	std::vector<Expression> subExp = {*(currExp++), Expression("\0")};
 	std::vector<Expression>::iterator subIt = subExp.begin();
 	
 	bool inverted = 0;
@@ -58,7 +58,7 @@ bool matchGroup(std::string& input_line, std::vector<Expression>::iterator& curr
 			return 1;
 		}
 		
-	} while ();
+	} while ((*subIt).type != Expression::GROUP_END && (*subIt).type != Expression::END_OF_FILE);
 	
 	return 0;
 }
