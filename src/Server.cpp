@@ -80,7 +80,7 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 
 
 bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
-	std::cout << "Entered function: matchHere with an input line of: " << input_line << "\n And a current expression of: " << (*currExp).typeString << std::endl;
+	std::cout << "Entered function: matchHere with an input line of: " << input_line << "\n And a current expression of: " << (*currExp).typeString << "(" << (*currExp).type << ")" << std::endl;
 	
 	if ((*currExp).type == Expression::END_OF_FILE){
 		return 1;
