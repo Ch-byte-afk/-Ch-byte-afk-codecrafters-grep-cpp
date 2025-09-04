@@ -42,7 +42,7 @@ bool handlePattern_GROUP(const std::string& input_line, const std::string& patte
 	} 
 }
 
-bool matchGroup(std::string& input_line, std::vector<Expression>::iterator& currExp){
+bool matchGroup(const std::string& input_line, std::vector<Expression>::iterator& currExp){
 	
 	std::vector<Expression> subExp = {*(currExp++), Expression("\0")};
 	std::vector<Expression>::iterator subIt = subExp.begin();
