@@ -50,10 +50,13 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 	} else {
 		while(((*(currExp + index)).type != Expression::GROUP_END) && ((*(currExp + index)).type != Expression::END_OF_FILE)){
 			std::vector<Expression> subVec = {*(currExp + index), Expression("\0")};
-			if(!matchHere(input_line, subVec.begin()) && input_line != ""){
-				return 1;
+			if(matchHere(input_line, subVec.begin()) && input_line){
+				return 0;
 			}
 			index++;
+		}
+		if(input_line != ""){
+			return 1;
 		}
 	}
 	
