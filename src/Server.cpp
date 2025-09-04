@@ -28,7 +28,7 @@ bool matchOOM(const std::string& input_line, const std::vector<Expression>::iter
 	return 0;
 }
 
-matchZOO(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
+bool matchZOO(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
 	
 	std::vector<Expression> subExp = {*currExp, Expression("\0")};
 	std::vector<Expression>::iterator subIt = subExp.begin();
@@ -94,6 +94,7 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 			return matchOOM(input_line, currExp);
 		
 		case Expression::MATCH_ZERO_OR_ONE:
+			return matchZOO(input_line, currExp);
 			break;
 		
 		case Expression::MATCH_ZERO_OR_MORE:
