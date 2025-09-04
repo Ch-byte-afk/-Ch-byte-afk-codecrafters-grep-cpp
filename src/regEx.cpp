@@ -48,7 +48,9 @@ Expression::Expression(std::string expString) : typeString(expString) {
 			type = MATCH_ONE_OR_MORE;
 			break;
 			
-			// Zero or One should go here.
+		case '?':
+			type = ZERO_OR_ONE;
+			break;
 		
 		case '*':
 			type = MATCH_ZERO_OR_MORE;

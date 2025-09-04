@@ -6,6 +6,7 @@
 
 bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp);
 
+
 bool matchOOM(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
 	
 	std::vector<Expression> subExp = {*currExp, Expression("\0")};
@@ -26,6 +27,20 @@ bool matchOOM(const std::string& input_line, const std::vector<Expression>::iter
 	
 	return 0;
 }
+
+matchZOO(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
+	
+	std::vector<Expression> subExp = {*currExp, Expression("\0")};
+	std::vector<Expression>::iterator subIt = subExp.begin();
+	
+	int index = 0;
+	
+	if matchHere(input_line, subIt){
+		return matchHere(input_line.substr(1), currExp + 2);
+	}
+	return matchHere(input_line, currExp + 2);
+}
+
 
 bool matchGroup(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
 	
