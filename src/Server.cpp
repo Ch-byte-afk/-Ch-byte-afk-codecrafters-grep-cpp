@@ -83,7 +83,7 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 	std::vector<Expression>::iterator middle = currExp;
 	std::vector<Expression>::iterator end = currExp;
 	
-	while((*(middle++)).type != Expression::EITHER_OR_MIDDLE){ // Return false if either end or middle is not found.
+	for(; (*(middle)).type != Expression::EITHER_OR_MIDDLE; middle++){ // Return false if either end or middle is not found.
 		if(((*middle).type == Expression::END_OF_FILE) || ((*middle).type == Expression::UNDEFINED)){
 			return 0;
 		}
@@ -92,7 +92,7 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 	std::cout << "MIDDLE TYPE: " << (*middle).typeString << std::endl;
 		std::cout << "END TYPE: " << (*end).typeString << std::endl;
 	
-	while((*(end++)).type != Expression::EITHER_OR_END){
+	for(; (*(end)).type != Expression::EITHER_OR_END; end++){
 		if(((*end).type == Expression::END_OF_FILE) || ((*middle).type == Expression::UNDEFINED)){
 			return 0;
 		}
