@@ -49,7 +49,7 @@ Expression::Expression(std::string expString) : typeString(expString) {
 			break;
 			
 		case '?':
-			type = ZERO_OR_ONE;
+			type = MATCH_ZERO_OR_ONE;
 			break;
 		
 		case '*':
