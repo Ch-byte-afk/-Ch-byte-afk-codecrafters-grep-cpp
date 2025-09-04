@@ -95,8 +95,8 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 		}
 	}
 	
-	std::vector<Expression> SubLeft = std::vector<Expression>(start + 1, middle - 1);
-	std::vector<Expression> SubRight = std::vector<Expression>(middle + 1, end - 1);
+	std::vector<Expression> subLeft = std::vector<Expression>(start + 1, middle - 1);
+	std::vector<Expression> subRight = std::vector<Expression>(middle + 1, end - 1);
 	
 	
 	if (matchHere(input_line, subLeft.begin()) || matchHere(input_line, subRight.begin())){
