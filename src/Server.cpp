@@ -13,12 +13,12 @@ bool matchOOM(const std::string& input_line, const std::vector<Expression>::iter
 	
 	int index = 0;
 	
-	while(matchHere(subIt, input_line.substr(index))){
+	while(matchHere(input_line.substr(index), subIt)){
 		index++;
 	}
 	
 	while(index != 0){ //mathHere returned true at least 1 time.
-		index--
+		index--;
 		
 		if(matchHere(input_line.substr(index), currExp + 2)
 			return 1;
