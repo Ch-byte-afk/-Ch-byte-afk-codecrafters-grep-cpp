@@ -133,8 +133,9 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	int index = 0;
 	std::vector<Expression>::iterator currExp = expressions.begin();
 	
+	std::cout << expressions[0].type << endl;
 	if (expressions[0].type == Expression::ANCHOR_START){
-		return matchHere(input_line, currExp++);
+		return matchHere(input_line, currExp + 1);
 	}
 	do {
 		if (matchHere(input_line.substr(index), currExp)) // Run once even if input_line is "". If pattern == "" and input_line == "", still returns true.
