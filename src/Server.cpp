@@ -6,6 +6,7 @@
 /* 
 	Refactor to parse into individual class pattern objects.
 */
+bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp);
 
 
 bool handlePattern_MATCH(const std::string& input_line, const std::string& pattern){
