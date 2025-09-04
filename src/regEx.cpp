@@ -15,58 +15,70 @@ Expression::Expression(std::string expString) : typeString(expString) {
 		
 				case 'd':
 					type = DIGIT;
-					break;
+					return;
 					
 				case 'w':
 					type = WORD;
-					break;
+					return;
 					
 				default:
 					type = UNDEFINED;
-					break;
+					return;
 			}
 			
-			break;
+			return;
 		
 		case '.':
 			type = ANY;
-			break;
+			return;
 		
 		case '[':
 			type = GROUP_START;
-			break;
+			return;
 			
 		case ']':
 			type = GROUP_END;
-			break;
+			return;
+			
+		case '(':
+			type = EITHER_OR_START;
+			return;
+			
+		case '|':
+			type = EITHER_OR_MIDDLE;
+			return;
+		
+		case ')':
+			type = EITHER_OR_END;
+			return;
 		
 		case '^':
 			type = ANCHOR_START;
-			break;
+			return;
 			
 		case '$':
 			type = ANCHOR_END;
-			break;
+			return;
 		
 		case '+':
 			type = MATCH_ONE_OR_MORE;
-			break;
+			return;
 			
 		case '?':
 			type = MATCH_ZERO_OR_ONE;
-			break;
+			return;
 		
 		case '*':
 			type = MATCH_ZERO_OR_MORE;
-			break;
+			return;
 			
 		case '\0':
 			type = END_OF_FILE;
-			break;
+			return;
 		
 		default:
 			type = EXACT;
-			break;
+			return;
 			
 	}
 }

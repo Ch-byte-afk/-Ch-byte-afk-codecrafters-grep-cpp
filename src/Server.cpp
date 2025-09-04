@@ -78,6 +78,32 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 	return 0;
 }
 
+bool matchEitherOr(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
+	std::vector<Expression>::iterator start = currExp;
+	std::vector<Expression>::iterator middle = currExp;
+	std::vector<Expression>::iterator end = currExp;
+	
+	while((*(middle++)).type != Expression::EITHER_OR_MIDDLE){ // Return false if either end or middle is not found.
+		if(((*middle).type == Expression::END_OF_FILE) || ((*middle).type == Expression::UNDEFINED)){
+			return 0;
+		}
+	}
+	
+	while((*(end++)).type != Expression::EITHER_OR_END){
+		if(((*end).type == Expression::END_OF_FILE) || ((*middle).type == Expression::UNDEFINED)){
+			return 0;
+		}
+	}
+	
+	std::vector<Expression> SubLeft = std::vector<Expression>(start + 1, middle - 1);
+	std::vector<Expression> SubRight = std::vector<Expression>(middle + 1, end - 1);
+	
+	
+	if (matchHere(input_line, subLeft.begin()) || matchHere(input_line, subRight.begin())){
+		return 1;
+	}
+	return 0;
+}
 
 bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
 	std::cout << "Entered function: matchHere with an input line of: " << input_line << "\n And a current expression of: " << (*currExp).typeString << "(" << (*currExp).type << ")" << std::endl;
@@ -140,8 +166,8 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 			return matchGroup(input_line, currExp);
 				
 			
-		case Expression::GROUP_END:
-			return matchHere(input_line, currExp + 1);
+		case Expression::EITHER_OR_START:
+			return matchEitherOr(input_line, currExp);
 			
 		case Expression::ANCHOR_END:
 			if((*(currExp + 1)).type == Expression::END_OF_FILE){
