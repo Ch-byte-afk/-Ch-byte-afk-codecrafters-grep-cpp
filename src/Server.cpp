@@ -6,6 +6,26 @@
 
 bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp);
 
+bool matchOOM(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
+	
+	std::vector<Expression> subExp = {*currExp, Expression("\0")};
+	std::vector<Expression>::iterator subIt = subExp.begin();
+	
+	int index = 0;
+	
+	while(matchHere(subIt, input_line.substr(index))){
+		index++;
+	}
+	
+	while(index != 0){ //mathHere returned true at least 1 time.
+		index--
+		
+		if(matchHere(input_line.substr(index), currExp + 2)
+			return 1;
+	}
+	
+	return 0;
+}
 
 bool matchGroup(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
 	
@@ -40,6 +60,21 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 	}
 
 	// Expression[1] == one or more.
+	Expression nextExp = currExp + 1;
+	switch((*nextExp).type){
+		
+		case Expression::MATCH_ONE_OR_MORE:
+			return matchOOM(input_line, currExp);
+		
+		case Expression::MATCH_ZERO_OR_ONE:
+			break;
+		
+		case Expression::MATCH_ZERO_OR_MORE:
+			break;
+	
+		default:
+			break;
+	}
 	
 	switch((*currExp).type){
 		
@@ -86,31 +121,7 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 			
 	}
 		
-	return 0;
-		/*
-		case '\\':
-			if (handlePattern_MATCH(input_line, pattern)){ // Step pattern by 2 to account for backslash (\) character.
-				return matchHere(input_line.substr(1), pattern.substr(2));
-			} 
-		
-		case '[':
-			if (handlePattern_GROUP(input_line, pattern)){
-				return matchHere(input_line.substr(1), pattern.substr(pattern.find_last_of(']') + 1));
-			}
-		
-		case '$':
-			if (pattern[1] == '\0'){
-				return input_line == "";
-			}
-		
-		default:
-			if (pattern[0] == input_line[0]) { // Switch statement may help reduce complexity in the future.
-				return matchHere(input_line.substr(1), pattern.substr(1));
-			}
-	}
-	*/
-	
-	
+	return 0;	
 }
 
 bool match_pattern(const std::string& input_line, const std::string& pattern) {
@@ -120,7 +131,7 @@ bool match_pattern(const std::string& input_line, const std::string& pattern) {
 	std::vector<Expression>::iterator currExp = expressions.begin();
 	
 	if (expressions[0].type == Expression::ANCHOR_START){
-		return matchHere(input_line, ++currExp);
+		return matchHere(input_line, currExp++);
 	}
 	do {
 		
