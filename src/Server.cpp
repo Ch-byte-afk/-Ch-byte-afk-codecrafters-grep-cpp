@@ -128,7 +128,7 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 			break;
 		
 		case Expression::ANY:
-			if(input_line[0] != ' ' && input_line != "")
+			if((input_line[0] != ' ') && (input_line != ""))
 				return matchHere(input_line.substr(1), currExp + 1);
 			break;
 		
