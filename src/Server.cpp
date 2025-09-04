@@ -28,23 +28,35 @@ bool matchOOM(const std::string& input_line, const std::vector<Expression>::iter
 }
 
 bool matchGroup(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
-	std::vector<Expression> subExp = {*(currExp + 1), Expression("\0")};
+	
 	int index = 1;
 	
 	bool inverted = 0;
 	
-	if((*(subExp.begin())).typeString == "^"){
+	if((*(currExp + 1)).typeString == '^'){
 		inverted = 1;
 		index++;
 	}
 	
-	do{
-		if (matchHere(input_line, currExp + index)){
-			return 1 != inverted;
+	if(!inverted){
+		while((*(currExp + index)).type != Expression::GROUP_END && *(currExp + index)).type != Expression::END_OF_FILE){
+			std::vector<Expression> subVec = {currExp + index, Expression("\0")};
+			if(matchHere(input_line, subVec.begin())){
+				return 1;
+			}
+			index++;
 		}
-	} while ((*(currExp + ++index)).type != Expression::GROUP_END && (*(currExp + index + 1)).type != Expression::END_OF_FILE);
+		
+	} else {
+		while((*(currExp + index)).type != Expression::GROUP_END && *(currExp + index)).type != Expression::END_OF_FILE){
+			std::vector<Expression> subVec = {currExp + index, Expression("\0")};
+			if(!matchHere(input_line, subVec.begin()) && input_line != ""){
+				return 1;
+			}
+		}
+	}
 	
-	return inverted;
+	return 0;
 }
 
 
