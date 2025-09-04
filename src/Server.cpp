@@ -42,7 +42,7 @@ bool handlePattern_GROUP(const std::string& input_line, const std::string& patte
 	} 
 }
 
-bool matchGroup(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
+bool matchGroup(const std::string& input_line, std::vector<Expression>::iterator& currExp){
 	
 	std::vector<Expression> subExp = {*(currExp++), Expression("\0")};
 	std::vector<Expression>::iterator subIt = subExp.begin();
@@ -66,7 +66,7 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 
 
 
-bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
+bool matchHere(const std::string& input_line, std::vector<Expression>::iterator& currExp){
 	if ((*currExp).type == Expression::END_OF_FILE){
 		return 1;
 	}
@@ -97,7 +97,7 @@ bool matchHere(const std::string& input_line, const std::vector<Expression>::ite
 			break;
 		
 		case Expression::GROUP_START:
-			if(matchGroup(input_line, currExp){
+			if(matchGroup(input_line, currExp)){
 				return matchHere(input_line.substr(1), currExp + 1);
 			}
 			
