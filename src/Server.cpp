@@ -86,6 +86,7 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 	
 	for(unsigned int depth = 0; ((*(end)).type != Expression::EITHER_OR_END) || depth != 0; end++){
 		if(((*end).type == Expression::EITHER_OR_MIDDLE) && (depth == 0)){
+			std::cout << "Pushing back: " << (*end).typeString << std::endl;
 			scope.push_back(end);
 		}
 		
@@ -99,6 +100,8 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 	for(unsigned int index = 0; index != scope.size() - 1; index++){
 	std::vector<Expression> subScope = std::vector<Expression>(scope[index] + 1, scope[index + 1] - 1);
 	subScope.push_back(Expression("\0"));
+	
+	std::cout << "Beginning type: " << subScope[0].typeString << std::endl;
 	
 		if (matchHere(input_line, subScope.begin())){
 			return 1;
