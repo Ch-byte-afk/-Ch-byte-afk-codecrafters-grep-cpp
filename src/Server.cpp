@@ -102,16 +102,18 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 	scope.push_back(end);
 	
 	for(std::vector<Expression>::iterator& it : scope){
-		std::cout << (*it).typeString << std::endl;
+		std::cout << (*it).typeString;
 	}
+	std::cout << std::endl;
 	
 	for(unsigned int index = 0; index != scope.size() - 1; index++){
-	std::vector<Expression> subScope = std::vector<Expression>(scope[index] + 1, scope[index + 1] - 1);
+	std::vector<Expression> subScope = std::vector<Expression>(scope[index] + 1, scope[index + 1]);
 	subScope.push_back(Expression("\0"));
 	
 		for(Expression& e : subScope){
-			std::cout << e.typeString << std::endl;
+			std::cout << e.typeString;
 		}
+		std::cout << std::endl;
 	
 		if (matchHere(input_line, subScope.begin())){
 			return 1;
