@@ -80,34 +80,44 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 
 bool matchEitherOr(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
 	std::vector<Expression>::iterator start = currExp;
-	std::vector<Expression>::iterator middle = currExp;
 	std::vector<Expression>::iterator end = currExp;
 	
-	for(; (*(middle)).type != Expression::EITHER_OR_MIDDLE; middle++){ // Return false if either end or middle is not found.
-		if(((*middle).type == Expression::END_OF_FILE) || ((*middle).type == Expression::UNDEFINED)){
+	std::vector<Expression> scope = {*start};
+	
+	for(unsigned int depth = 0; ((*(end)).type != Expression::EITHER_OR_END) || depth != 0; end++){
+		if(((*end).type == Expression::EITHER_OR_MIDDLE) && (depth == 0)){
+			scope.push_back(*end);
+		}
+		
+		if(((*end).type == Expression::END_OF_FILE) || ((*end).type == Expression::UNDEFINED)){
 			return 0;
 		}
 	}
+	
+	scope.push_back(*end);
 	
 	std::cout << "MIDDLE TYPE: " << (*middle).typeString << std::endl;
-		std::cout << "END TYPE: " << (*end).typeString << std::endl;
+	std::cout << "END TYPE: " << (*end).typeString << std::endl;
 	
-	for(; (*(end)).type != Expression::EITHER_OR_END; end++){
-		if(((*end).type == Expression::END_OF_FILE) || ((*middle).type == Expression::UNDEFINED)){
-			return 0;
+	for(unsigned int index = 0; index != scope.size(); index++){
+	std::vector<Expression> subScope = std::vector<Expression>(scope[index] + 1, scope[index + 1] - 1);
+	subScope.push_back(Expression("\0"));
+	
+		if (matchHere(input_line, subLeft.begin()) || matchHere(input_line, subRight.begin())){
+			return 1;
 		}
 	}
 	
-	std::vector<Expression> subLeft = std::vector<Expression>(start + 1, middle - 1);
-	std::vector<Expression> subRight = std::vector<Expression>(middle + 1, end - 1);
-	
-	subLeft.push_back(Expression("\0"));
-	subRight.push_back(Expression("\0"));
-	
-	if (matchHere(input_line, subLeft.begin()) || matchHere(input_line, subRight.begin())){
-		return 1;
-	}
 	return 0;
+	/* 
+	Needs massive refactor. Current idea:
+	int scopeDepth keeps track of the depth of the current scope. If we run into another (, it increases by 1.
+	If we run into a ) and scopeDepth != 0, decrease scopeDepth by 1. Finally, if we reach ) and scopeDepth == 0,
+	set end to equal the found ). Do the same for middle (|) operators, appending them to a vector if they are found at scopeDepth of 0.
+	
+	Alternatively, we could reverse-iterate over the vector, finding the outermost remaining scope, and only passing in the restricted scope
+	as done here. This would require more overall iterations at maximum, and would not function for patterns such as "(dog | cat)(cat | mouse)" with 2 unique scopes.
+	*/
 }
 
 bool matchHere(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
