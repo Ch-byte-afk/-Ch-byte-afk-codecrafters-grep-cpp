@@ -91,7 +91,7 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 		
 		if((*end).type == Expression::EITHER_OR_START){
 			depth++;
-		} else if ((*end).type == Expression::EITHER_OR_END)){
+		} else if ((*end).type == Expression::EITHER_OR_END){
 			depth--;
 		} else if(((*end).type == Expression::EITHER_OR_MIDDLE) && (depth == 0)){
 			std::cout << "Pushing back: " << (*end).typeString << std::endl;
