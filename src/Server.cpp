@@ -80,18 +80,22 @@ bool matchGroup(const std::string& input_line, const std::vector<Expression>::it
 
 bool matchEitherOr(const std::string& input_line, const std::vector<Expression>::iterator& currExp){
 	std::vector<Expression>::iterator start = currExp;
-	std::vector<Expression>::iterator end = currExp;
+	std::vector<Expression>::iterator end = currExp + 1;
 	
 	std::vector<std::vector<Expression>::iterator> scope = {start};
 	
 	for(unsigned int depth = 0; ((*(end)).type != Expression::EITHER_OR_END) || depth != 0; end++){
-		if(((*end).type == Expression::EITHER_OR_MIDDLE) && (depth == 0)){
-			std::cout << "Pushing back: " << (*end).typeString << std::endl;
-			scope.push_back(end);
-		}
-		
 		if(((*end).type == Expression::END_OF_FILE) || ((*end).type == Expression::UNDEFINED)){
 			return 0;
+		}
+		
+		if((*end).type == Expression::EITHER_OR_START){
+			depth++;
+		} else if ((*end).type == Expression::EITHER_OR_END)){
+			depth--;
+		} else if(((*end).type == Expression::EITHER_OR_MIDDLE) && (depth == 0)){
+			std::cout << "Pushing back: " << (*end).typeString << std::endl;
+			scope.push_back(end);
 		}
 	}
 	
