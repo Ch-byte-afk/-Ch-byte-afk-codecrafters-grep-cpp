@@ -82,7 +82,7 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 	std::vector<Expression>::iterator start = currExp;
 	std::vector<Expression>::iterator end = currExp;
 	
-	std::vector<Expression>::iterator scope = {start};
+	std::vector<std::vector<Expression>::iterator> scope = {start};
 	
 	for(unsigned int depth = 0; ((*(end)).type != Expression::EITHER_OR_END) || depth != 0; end++){
 		if(((*end).type == Expression::EITHER_OR_MIDDLE) && (depth == 0)){
