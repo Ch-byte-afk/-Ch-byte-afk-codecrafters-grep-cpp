@@ -97,7 +97,7 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 	
 	scope.push_back(end);
 	
-	for{std::vector<Expression>::iterator& it : scope}{
+	for(std::vector<Expression>::iterator& it : scope){
 		std::cout << (*it).typeString << std::endl;
 	}
 	
@@ -105,7 +105,7 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 	std::vector<Expression> subScope = std::vector<Expression>(scope[index] + 1, scope[index + 1] - 1);
 	subScope.push_back(Expression("\0"));
 	
-		for{Expression& e : subScope}{
+		for(Expression& e : subScope){
 			std::cout << e.typeString << std::endl;
 		}
 	
