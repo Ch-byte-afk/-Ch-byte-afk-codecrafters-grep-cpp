@@ -82,11 +82,11 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 	std::vector<Expression>::iterator start = currExp;
 	std::vector<Expression>::iterator end = currExp;
 	
-	std::vector<Expression> scope = {*start};
+	std::vector<Expression>::iterator scope = {start};
 	
 	for(unsigned int depth = 0; ((*(end)).type != Expression::EITHER_OR_END) || depth != 0; end++){
 		if(((*end).type == Expression::EITHER_OR_MIDDLE) && (depth == 0)){
-			scope.push_back(*end);
+			scope.push_back(end);
 		}
 		
 		if(((*end).type == Expression::END_OF_FILE) || ((*end).type == Expression::UNDEFINED)){
@@ -94,13 +94,13 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 		}
 	}
 	
-	scope.push_back(*end);
+	scope.push_back(end);
 	
 	for(unsigned int index = 0; index != scope.size(); index++){
 	std::vector<Expression> subScope = std::vector<Expression>(scope[index] + 1, scope[index + 1] - 1);
 	subScope.push_back(Expression("\0"));
 	
-		if (matchHere(input_line, subLeft.begin()) || matchHere(input_line, subRight.begin())){
+		if (matchHere(input_line, subScope.begin())){
 			return 1;
 		}
 	}
