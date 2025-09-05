@@ -116,7 +116,7 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 		std::cout << std::endl;
 	
 		if (matchHere(input_line, subScope.begin())){
-			return matchHere(input_line.substr(subScope.size() - 1), *scope.end());
+			return matchHere(input_line.substr(subScope.size() - 1), *scope.end() - 1);
 		}
 	}
 	
