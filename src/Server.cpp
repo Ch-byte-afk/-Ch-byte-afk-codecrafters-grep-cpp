@@ -96,7 +96,7 @@ bool matchEitherOr(const std::string& input_line, const std::vector<Expression>:
 	
 	scope.push_back(end);
 	
-	for(unsigned int index = 0; index != scope.size(); index++){
+	for(unsigned int index = 0; index != scope.size() - 1; index++){
 	std::vector<Expression> subScope = std::vector<Expression>(scope[index] + 1, scope[index + 1] - 1);
 	subScope.push_back(Expression("\0"));
 	
