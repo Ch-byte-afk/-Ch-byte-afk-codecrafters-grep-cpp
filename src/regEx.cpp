@@ -164,9 +164,11 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 		switch((*(exp + 1)).type){
 			
 			case Expression::MATCH_ONE_OR_MORE:
+				std::cout << "One or More (+) operator found." << std::endl;
 				return postfixOneOrMore(exp, end, match);
 				
 			case Expression::MATCH_ZERO_OR_ONE:
+				std::cout << "Zero or One (?) operator found." << std::endl;
 				return postfixZeroOrOne(exp, end, match);
 			
 			default:
@@ -308,6 +310,7 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator matc
 		std::cout << "Entered 308 While" << std::endl;
 		
 		if (matchHere(currStart, currEnd, match)){
+			std::cout << "Scope match complete." << std::endl;
 			return true;
 		}
 		
