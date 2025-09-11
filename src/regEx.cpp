@@ -365,8 +365,8 @@ bool regEx::postfixZeroOrOne(std::vector<Expression>::const_iterator& exp, const
 		
 		std::cout << "Found to be a zero-match. (ZeroOrMore)" << std::endl; 
 		
-		--match;
-		++exp;
+		match = currMatch - 1;
+		exp = end - 1;
 		return true;
 	}
 	
@@ -378,7 +378,8 @@ bool regEx::postfixZeroOrOne(std::vector<Expression>::const_iterator& exp, const
 			
 			std::cout << "Found to be a one-match. (ZeroOrMore)" << std::endl;
 			
-			++exp;
+			match = currMatch - 1;
+			exp = end - 1;
 			return true;
 		}
 	}
