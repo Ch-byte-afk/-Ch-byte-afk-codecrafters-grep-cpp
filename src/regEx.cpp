@@ -313,7 +313,7 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator& mat
 		std::cout << "Entered 308 While" << std::endl;
 		
 		if (matchHere(currStart, currEnd, currMatch)){
-			std::cout << "Scope match complete." << std::endl;
+			std::cout << "Scope match complete. Current match is: " << *currMatch << std::endl;
 			match = currMatch;
 			return true;
 		} else {
