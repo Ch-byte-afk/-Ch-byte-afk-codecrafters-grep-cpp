@@ -294,15 +294,15 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator matc
 	
 	subScopes.push_back(fullScope.cend());
 	
-	
+	std::cout << "Last object before end: " << subScopes[size - 2].typeString << std::endl;
 	// Does not function with future possible '&' conditional operator. If implimented, refactor.
 	
 	int index = 0;
-	std::vector<Expression>::const_iterator currStart = subScopes[index];
 	
+	std::vector<Expression>::const_iterator currStart = subScopes[index];
 	std::vector<Expression>::const_iterator currEnd;
 	
-	while(currStart != fullScope.cend()){
+	while(currEnd != fullScope.cend()){
 		currEnd = subScopes[index + 1];
 		
 		std::cout << "Entered 308 While" << std::endl;
