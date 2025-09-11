@@ -303,7 +303,7 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator& mat
 	int index = 0;
 	
 	std::vector<Expression>::const_iterator currStart = subScopes[index];
-	std::vector<Expression>::const_iterator currEnd = subScopes[index + 1];
+	std::vector<Expression>::const_iterator currEnd = currStart;
 	
 	std::string::const_iterator currMatch = match;
 	
