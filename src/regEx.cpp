@@ -229,7 +229,7 @@ bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::v
 	
 		std::cout << "Full match. Match complete." << std::endl;
 		
-		match = textCurr - 1;
+		match = textCurr;
 		return true;
 	}
 	
@@ -303,16 +303,21 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator& mat
 	int index = 0;
 	
 	std::vector<Expression>::const_iterator currStart = subScopes[index];
-	std::vector<Expression>::const_iterator currEnd;
+	std::vector<Expression>::const_iterator currEnd = subScopes[index + 1];
+	
+	std::string::const_iterator currMatch = match;
 	
 	while(currEnd != fullScope.cend()){
 		currEnd = subScopes[index + 1];
 		
 		std::cout << "Entered 308 While" << std::endl;
 		
-		if (matchHere(currStart, currEnd, match)){
+		if (matchHere(currStart, currEnd, currMatch)){
 			std::cout << "Scope match complete." << std::endl;
+			match = currMatch;
 			return true;
+		} else {
+			currMatch = match;
 		}
 		
 		++index;
