@@ -163,6 +163,7 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 	if (exp + 1 != end){
 		switch((*(exp + 1)).type){
 			
+			
 			case Expression::MATCH_ONE_OR_MORE:
 				std::cout << "matchExpression - One or More (+) postfix found. Processing postfix." << std::endl;
 				return postfixOneOrMore(exp, end, match);
@@ -197,11 +198,9 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 			
 		case Expression::SCOPE:
 			return matchScope(*exp, match);
-		
-		
+			
 		case Expression::ANCHOR_END:
 			return (exp + 1) == end && *match == '\0';
-		
 			
 		default:
 			return false;
@@ -211,55 +210,6 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 }
 
 bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::vector<Expression>::const_iterator& end, std::string::const_iterator& match){
-	std::string::const_iterator textCurr = match;
-	
-	std::cout << "matchHere - new match entered." << std::endl;
-	
-	while(*textCurr != '\0'){
-		if(exp == end){
-			std::cout << "matchHere - Full match. Returning true." << std::endl;
-			match = textCurr;
-			
-			return true;
-		}
-		
-		std::cout << "matchHere - Matching expression: " << (*exp).typeString << " (" << (*exp).type << ")\n"
-		<< "matchHere - with starting character: " << *textCurr << std::endl;
-		
-		if (matchExpression(exp, end, textCurr)){
-		
-			std::cout << "matchHere - Match. Continueing..." << std::endl;
-			
-			++exp;
-			++textCurr;
-			continue;
-		}
-		
-		std::cout << "matchHere - No match. Returning false." << std::endl;
-		return false;
-	}
-	
-	if(*textCurr == '\0'){
-		if(matchExpression(exp, end, textCurr)){
-			std::cout << "matchHere - Full match. Returning true." << std::endl;
-			match = textCurr;
-			
-			return true;	
-		}
-	}
-	
-	if(exp == end){
-	
-		std::cout << "matchHere - Full match. Returning true." << std::endl;
-		match = textCurr;
-		return true;
-	}
-	
-	std::cout << "matchHere - No match. Returning false." << std::endl;
-	return false;
-	
-	
-	/*
 	std::string::const_iterator textCurr = match;
 	
 	std::cout << "matchHere - new match entered." << std::endl;
@@ -280,6 +230,8 @@ bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::v
 		break;
 	}
 	
+	
+	
 	if(exp == end){ //If end of scope was reached, success. All match.
 	
 		std::cout << "matchHere - Full match. Returning true." << std::endl;
@@ -291,7 +243,6 @@ bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::v
 	std::cout << "matchHere - No match. Returning false." << std::endl;
 	
 	return false;
-	*/
 }
 
 bool regEx::matchPattern(const std::string& pattern, const std::string& text){
