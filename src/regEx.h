@@ -48,8 +48,8 @@ bool findScope(std::string::const_iterator& scopeStart, std::string::const_itera
 bool matchExpression(std::vector<Expression>::const_iterator& exp, const std::vector<Expression>::const_iterator& end, std::string::const_iterator& match);
 bool matchPattern(const std::string& pattern, const std::string& text);
 bool matchHere(std::vector<Expression>::const_iterator& exp, const std::vector<Expression>::const_iterator& end, std::string::const_iterator& match);
-bool matchAnyOf(const Expression& group, std::string::const_iterator match);
-bool matchScope(const Expression& scope, std::string::const_iterator match);
+bool matchAnyOf(const Expression& group, std::string::const_iterator& match);
+bool matchScope(const Expression& scope, std::string::const_iterator& match);
 
 //bool conditionAND(const std::vector<Expression>& scope, const std::vector<Expression>::const_iterator& andPos);
 //bool conditionOR(const std::vector<Expression>& scope, const std::vector<Expression>::const_iterator& orPos);

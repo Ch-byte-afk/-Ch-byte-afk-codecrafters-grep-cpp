@@ -271,7 +271,7 @@ bool regEx::matchPattern(const std::string& pattern, const std::string& text){
 
 // Specialty match functions:
 
-bool regEx::matchAnyOf(const Expression& group, std::string::const_iterator match){
+bool regEx::matchAnyOf(const Expression& group, std::string::const_iterator& match){
 	// Starting index 1: directly after opening bracket. Length of size() - 2: length of full string excluding brackets.
 	std::vector<Expression> possibleMatches = parsePattern(group.typeString.substr(1, group.typeString.size() - 2));
 	
