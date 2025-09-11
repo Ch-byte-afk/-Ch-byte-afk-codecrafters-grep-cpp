@@ -245,9 +245,10 @@ bool regEx::matchPattern(const std::string& pattern, const std::string& text){
 	std::string::const_iterator match = text.begin();
 	
 	
-	if((*exp).type == Expression::ANCHOR_START)
+	if((*exp).type == Expression::ANCHOR_START){
+		++exp;
 		return matchHere(exp, end, match);
-	
+	}
 	
 	while(*textBegin!= '\0'){
 	if (matchHere(exp, end, match))
@@ -294,7 +295,6 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator matc
 	
 	subScopes.push_back(fullScope.cend());
 	
-	std::cout << "Last object before end: " << (*subScopes[subScopes.size() - 2]).typeString << std::endl;
 	// Does not function with future possible '&' conditional operator. If implimented, refactor.
 	
 	int index = 0;
