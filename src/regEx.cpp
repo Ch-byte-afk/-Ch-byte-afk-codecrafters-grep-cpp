@@ -342,11 +342,9 @@ bool regEx::postfixOneOrMore(std::vector<Expression>::const_iterator& exp, const
 	while(currMatch != match){ // At least one functional match found.
 		--currMatch;
 		
-		
-		
 		if (matchHere(nextExp, end, currMatch)){
 			match = currMatch;
-			exp = end - 1;
+			//exp = end - 1;
 			return true;
 		}
 	}
