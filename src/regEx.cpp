@@ -178,6 +178,10 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 	
 	std::cout << "matchExpression - No postfix found. Expression: " << (*exp).typeString << " (" << (*exp).type << ")" << std::endl;
 	
+	if(*match == '\0'){
+		std::cout << "matchExpression - Reached end of match string. Returning false." << std::endl;
+	}
+	
 	switch((*exp).type){
 		case Expression::EXACT:
 			return (*exp).typeString[0] == *match;
@@ -212,7 +216,7 @@ bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::v
 	
 	std::cout << "matchHere - new match entered." << std::endl;
 	
-	while(*textCurr != '\0' && exp != end){
+	while(exp != end){
 		
 		std::cout << "matchHere - Matching expression: " << (*exp).typeString << " (" << (*exp).type << ")\n"
 			<< "matchHere - with starting character: " << *textCurr << std::endl;
@@ -359,10 +363,17 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator& mat
 
 bool regEx::postfixOneOrMore(std::vector<Expression>::const_iterator& exp, const std::vector<Expression>::const_iterator& end, std::string::const_iterator& match){
 	
+	std::cout << "postfixOneOrMore (" << (*exp).typeString << ") - entered." << std::endl;
+	
+	if(*match == '\0'){
+		std::cout << "postfixOneOrMore (" << (*exp).typeString << ") - First index is at end of match string. Returning false." << std::endl;
+		return false;
+	}
+	
+	
 	std::vector<Expression>::const_iterator nextExp = exp + 2;
 	std::string::const_iterator currMatch = match;
 	
-	std::cout << "postfixOneOrMore (" << (*exp).typeString << ") - entered." << std::endl;
 	
 	while(*currMatch != '\0' && matchExpression(exp, exp + 1, currMatch)){
 		++currMatch;
