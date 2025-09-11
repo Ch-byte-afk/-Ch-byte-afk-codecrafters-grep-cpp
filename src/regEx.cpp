@@ -368,6 +368,8 @@ bool regEx::postfixZeroOrOne(std::vector<Expression>::const_iterator& exp, const
 		match = currMatch - 1;
 		exp = end - 1;
 		return true;
+	} else {
+		currMatch = match;
 	}
 	
 	
