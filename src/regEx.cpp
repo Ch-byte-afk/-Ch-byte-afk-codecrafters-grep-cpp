@@ -294,7 +294,7 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator matc
 	
 	subScopes.push_back(fullScope.cend());
 	
-	std::cout << "Last object before end: " << subScopes[subScopes.size() - 2].typeString << std::endl;
+	std::cout << "Last object before end: " << (*subScopes[subScopes.size() - 2]).typeString << std::endl;
 	// Does not function with future possible '&' conditional operator. If implimented, refactor.
 	
 	int index = 0;
