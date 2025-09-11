@@ -229,7 +229,7 @@ bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::v
 	
 		std::cout << "Full match. Match complete." << std::endl;
 		
-		match = textCurr;
+		match = textCurr - 1;
 		return true;
 	}
 	
