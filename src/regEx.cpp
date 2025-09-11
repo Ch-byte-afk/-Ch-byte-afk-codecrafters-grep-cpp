@@ -338,7 +338,7 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator& mat
 		
 		
 		if (matchHere(currStart, currEnd, currMatch)){
-			std::cout << "matchScope (" << scope.typeString << ") - subscope of: \"" << debugSubScopeString << "\" match found. Returning true with a current match of: " << "'" << *match << "'." << std::endl;
+			std::cout << "matchScope (" << scope.typeString << ") - subscope of: \"" << debugSubScopeString << "\" match found. Returning true with a current match of: " << "'" << *currMatch << "'." << std::endl;
 			match = currMatch - 1;
 			return true;
 		} else {
@@ -394,6 +394,20 @@ bool regEx::postfixZeroOrOne(std::vector<Expression>::const_iterator& exp, const
 	std::vector<Expression>::const_iterator nextExp = exp + 2;
 	std::string::const_iterator currMatch = match;
 	
+	
+	if(nextExp != end && matchExpression(exp, exp + 1, currMatch)){
+		std::string::const_iterator tempMatch = currMatch + 1;
+
+		if (matchHere(nextExp, end, tempMatch)){
+			
+			std::cout << "postfixZeroOrOne (" << (*exp).typeString << ") - Found to be a one-match. Returning true." << std::endl;
+			
+			match = tempMatch - 1;
+			exp = end - 1;
+			return true;
+		}
+	}
+	
 	if (matchHere(nextExp, end, currMatch)){
 		std::cout << "postfixZeroOrOne (" << (*exp).typeString << ") - Found to be a zero-match. Returning true." << std::endl;
 		
@@ -402,20 +416,6 @@ bool regEx::postfixZeroOrOne(std::vector<Expression>::const_iterator& exp, const
 		return true;
 	} else {
 		currMatch = match;
-	}
-	
-	
-	if(nextExp != end && matchExpression(exp, exp + 1, currMatch)){
-		++currMatch;
-
-		if (matchHere(nextExp, end, currMatch)){
-			
-			std::cout << "postfixZeroOrOne (" << (*exp).typeString << ") - Found to be a one-match. Returning true." << std::endl;
-			
-			match = currMatch - 1;
-			exp = end - 1;
-			return true;
-		}
 	}
 	
 	std::cout << "postfixZeroOrOne (" << (*exp).typeString << ") - No match found. Returning false." << std::endl;
