@@ -356,20 +356,27 @@ bool regEx::postfixZeroOrOne(std::vector<Expression>::const_iterator& exp, const
 	std::vector<Expression>::const_iterator nextExp = exp + 2;
 	std::string::const_iterator currMatch = match;
 	
+		std::cout << "End of scope given to ZeroOrOne: " << (*(end - 1)).typeString << std::endl;
 	
-	if(matchHere(nextExp, end, currMatch)){
-			match = currMatch;
-			exp = end - 1;
-			return true;
+	if (matchHere(nextExp, end, currMatch)){
+		
+		std::cout << "Found to be a zero-match. (ZeroOrMore)" << std::endl; 
+		
+		match = currMatch;
+		exp = nextExp;
+		return true;
 	}
 	
-	if(matchExpression(exp, exp + 1, currMatch)){
-		
+	
+	if(nextExp != end && matchExpression(exp, exp + 1, currMatch))
 		++currMatch;
-		
+
 		if (matchHere(nextExp, end, currMatch)){
+			
+			std::cout << "Found to be a one-match. (ZeroOrMore)" << std::endl;
+			
 			match = currMatch;
-			exp = end - 1;
+			exp = nextExp;
 			return true;
 		}
 	}
