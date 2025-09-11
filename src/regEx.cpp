@@ -178,9 +178,6 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 	
 	std::cout << "matchExpression - No postfix found. Expression: " << (*exp).typeString << " (" << (*exp).type << ")" << std::endl;
 	
-	if(*match == '\0'){
-		std::cout << "matchExpression - Reached end of match string. Returning false." << std::endl;
-	}
 	
 	switch((*exp).type){
 		case Expression::EXACT:
@@ -202,7 +199,7 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 			return matchScope(*exp, match);
 			
 		case Expression::ANCHOR_END:
-			return exp + 1 == end;
+			return (exp + 1) == end && *match == '\0';
 			
 		default:
 			return false;
