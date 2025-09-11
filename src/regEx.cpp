@@ -198,10 +198,10 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 		case Expression::SCOPE:
 			return matchScope(*exp, match);
 		
-		/*
+		
 		case Expression::ANCHOR_END:
 			return (exp + 1) == end && *match == '\0';
-		*/
+		
 			
 		default:
 			return false;
@@ -240,7 +240,7 @@ bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::v
 	}
 	
 	if(*textCurr == '\0'){
-		if(exp == (end - 1) && (*exp).type == Expression::ANCHOR_END){
+		if(matchExpression(exp, end, textCurr)){
 			std::cout << "matchHere - Full match. Returning true." << std::endl;
 			match = textCurr;
 			
