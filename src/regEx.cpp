@@ -314,7 +314,7 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator& mat
 		
 		if (matchHere(currStart, currEnd, currMatch)){
 			std::cout << "Scope match complete. Current match is: " << *currMatch << std::endl;
-			match = currMatch;
+			match = currMatch - 1;
 			return true;
 		} else {
 			currMatch = match;
