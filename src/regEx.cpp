@@ -246,7 +246,7 @@ bool regEx::matchPattern(const std::string& pattern, const std::string& text){
 	std::vector<Expression>::const_iterator exp = expressions.cbegin();
 	std::vector<Expression>::const_iterator end = expressions.cend();
 	
-	std::cout << "matchPattern - Match pattern called with a pattern of: \"" << pattern << "\matchPattern - And a string input of: \"" << text << "\"" << std::endl;
+	std::cout << "matchPattern - Match pattern called with a pattern of: \"" << pattern << "\" \nmatchPattern - And a string input of: \"" << text << "\"" << std::endl;
 	
 	std::string::const_iterator textBegin = text.begin();
 	std::string::const_iterator match = text.begin();
@@ -338,11 +338,11 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator& mat
 		
 		
 		if (matchHere(currStart, currEnd, currMatch)){
-			std::cout << "matchScope (" << scope.typeString << ") - subscope of: \"" << debugSubScopeString << "\" match found. Returning true with a current match of: " << "'" << *matcch << "'." << std::endl;
+			std::cout << "matchScope (" << scope.typeString << ") - subscope of: \"" << debugSubScopeString << "\" match found. Returning true with a current match of: " << "'" << *match << "'." << std::endl;
 			match = currMatch - 1;
 			return true;
 		} else {
-			std::cout << "matchScope (" << scope.typeString << ") - subscope of: \"" << debugSubScopeString << "\" did not match." << *matcch << "'." << std::endl;
+			std::cout << "matchScope (" << scope.typeString << ") - subscope of: \"" << debugSubScopeString << "\" did not match." << *match << "'." << std::endl;
 			currMatch = match;
 		}
 		
