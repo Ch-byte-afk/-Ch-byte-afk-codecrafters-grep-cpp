@@ -252,6 +252,7 @@ bool regEx::matchPattern(const std::string& pattern, const std::string& text){
 		return matchHere(exp, end, match);
 	}
 	
+	
 	while(*textBegin!= '\0'){
 	if (matchHere(exp, end, match))
 		return true;
@@ -283,7 +284,7 @@ bool regEx::matchAnyOf(const Expression& group, std::string::const_iterator matc
 	return false;
 }
 
-bool regEx::matchScope(const Expression& scope, std::string::const_iterator match){
+bool regEx::matchScope(const Expression& scope, std::string::const_iterator& match){
 	// Starting index 1: directly after opening bracket. Length of size() - 2: length of full string excluding parenthesis.
 	std::vector<Expression> fullScope = parsePattern(scope.typeString.substr(1, scope.typeString.size() - 2));
 	std::vector<std::vector<Expression>::const_iterator> subScopes = {fullScope.begin()};
