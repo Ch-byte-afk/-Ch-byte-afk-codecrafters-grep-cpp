@@ -305,6 +305,8 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator matc
 	while(currStart != fullScope.cend()){
 		currEnd = subScopes[index + 1];
 		
+		std::cout << "Entered 308 While" << std::endl;
+		
 		if (matchHere(currStart, currEnd, match)){
 			return true;
 		}
