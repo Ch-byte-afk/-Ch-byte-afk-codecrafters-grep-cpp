@@ -344,7 +344,7 @@ bool regEx::postfixOneOrMore(std::vector<Expression>::const_iterator& exp, const
 		
 		if (matchHere(nextExp, end, currMatch)){
 			match = currMatch;
-			//exp = end - 1;
+			exp = nextExp;
 			return true;
 		}
 	}
