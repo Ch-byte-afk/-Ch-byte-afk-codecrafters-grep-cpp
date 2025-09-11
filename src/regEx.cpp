@@ -224,7 +224,14 @@ bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::v
 			
 			++exp;
 			++textCurr;
-			continue;
+			
+			if(exp == end){
+				match = textCurr;
+				return true;
+				
+			} else {
+				continue;
+			}
 		}
 		break;
 	}
@@ -232,6 +239,9 @@ bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::v
 	if(exp == end){ //If end of scope was reached, success. All match.
 	
 		std::cout << "matchHere - Full match. Returning true." << std::endl;
+		
+		if(*textCurr != '\0')
+			++textCurr;
 		
 		match = textCurr;
 		return true;
