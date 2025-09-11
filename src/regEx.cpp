@@ -400,6 +400,7 @@ bool regEx::postfixZeroOrOne(std::vector<Expression>::const_iterator& exp, const
 
 		if (matchHere(nextExp, end, tempMatch)){
 			
+			
 			std::cout << "postfixZeroOrOne (" << (*exp).typeString << ") - Found to be a one-match. Returning true." << std::endl;
 			
 			match = tempMatch - 1;
