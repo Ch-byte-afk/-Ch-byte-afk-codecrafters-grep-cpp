@@ -164,11 +164,11 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 		switch((*(exp + 1)).type){
 			
 			case Expression::MATCH_ONE_OR_MORE:
-				std::cout << "One or More (+) operator found." << std::endl;
+				std::cout << "matchExpression - One or More (+) postfix found. Processing postfix." << std::endl;
 				return postfixOneOrMore(exp, end, match);
 				
 			case Expression::MATCH_ZERO_OR_ONE:
-				std::cout << "Zero or One (?) operator found." << std::endl;
+				std::cout << "matchExpression - Zero or one (?) postfix found. Processing postfix." << std::endl;
 				return postfixZeroOrOne(exp, end, match);
 			
 			default:
@@ -176,6 +176,7 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 		}
 	} 
 	
+	std::cout << "matchExpression - No postfix found. Expression: " << (*exp).typeString << " (" << (*exp).type << ")" << std::endl;
 	
 	switch((*exp).type){
 		case Expression::EXACT:
@@ -209,14 +210,16 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::vector<Expression>::const_iterator& end, std::string::const_iterator& match){
 	std::string::const_iterator textCurr = match;
 	
+	std::cout << "matchHere - new match entered." << std::endl;
+	
 	while(*textCurr != '\0' && exp != end){
 		
-		std::cout << "Matching expression: " << (*exp).typeString << " (" << (*exp).type << ")\n"
-			<< "with starting character: " << *textCurr << std::endl;
+		std::cout << "matchHere - Matching expression: " << (*exp).typeString << " (" << (*exp).type << ")\n"
+			<< "matchHere - with starting character: " << *textCurr << std::endl;
 		
 		if (matchExpression(exp, end, textCurr)){
 			
-			std::cout << "Match. Continueing..." << std::endl;
+			std::cout << "matchHere - Match. Continueing..." << std::endl;
 			
 			++exp;
 			++textCurr;
@@ -227,13 +230,13 @@ bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::v
 	
 	if(exp == end){ //If end of scope was reached, success. All match.
 	
-		std::cout << "Full match. Match complete." << std::endl;
+		std::cout << "matchHere - Full match. Returning true." << std::endl;
 		
 		match = textCurr;
 		return true;
 	}
 	
-	std::cout << "No match. Aborting..." << std::endl;
+	std::cout << "matchHere - No match. Returning false." << std::endl;
 	
 	return false;
 }
@@ -243,26 +246,32 @@ bool regEx::matchPattern(const std::string& pattern, const std::string& text){
 	std::vector<Expression>::const_iterator exp = expressions.cbegin();
 	std::vector<Expression>::const_iterator end = expressions.cend();
 	
+	std::cout << "matchPattern - Match pattern called with a pattern of: \"" << pattern << "\matchPattern - And a string input of: \"" << text << "\"" << std::endl;
+	
 	std::string::const_iterator textBegin = text.begin();
 	std::string::const_iterator match = text.begin();
 	
 	
 	if((*exp).type == Expression::ANCHOR_START){
+		std::cout << "Pattern is left-anchored. Testing from start..." << std::endl;
 		++exp;
 		return matchHere(exp, end, match);
 	}
 	
+	std::cout << "matchPattern - Pattern is not left-anchored. Testing from each index..." << std::endl;
 	
+	int debugIndex = 0;
 	while(*textBegin!= '\0'){
-	if (matchHere(exp, end, match))
-		return true;
+		std::cout << "matchPattern - Testing from character: '" << *match << "' at index: " << debugIndex++ << std::endl;
+		if (matchHere(exp, end, match))
+			return true;
 	
-	if(*textBegin == '\0')
-		return false;
+		if(*textBegin == '\0')
+			return false;
 	
-	++textBegin;
-	match = textBegin;
-	exp = expressions.cbegin();
+		++textBegin;
+		match = textBegin;
+		exp = expressions.cbegin();
 	}
 	
 	return false;
@@ -272,19 +281,27 @@ bool regEx::matchPattern(const std::string& pattern, const std::string& text){
 // Specialty match functions:
 
 bool regEx::matchAnyOf(const Expression& group, std::string::const_iterator& match){
+	
+	std::cout << "matchAnyOf (" << group.typeString << ") - Entered." << std::endl;
+	
 	// Starting index 1: directly after opening bracket. Length of size() - 2: length of full string excluding brackets.
 	std::vector<Expression> possibleMatches = parsePattern(group.typeString.substr(1, group.typeString.size() - 2));
 	
 	for(std::vector<Expression>::const_iterator exp = possibleMatches.cbegin();
 	exp != possibleMatches.cend(); ++exp){
 		if(matchExpression(exp, possibleMatches.cend(), match)){
+			std::cout << "matchAnyOf (" << group.typeString << ") - Match found: " << "'" << *match << "'. Returning true." << std::endl;
 			return true;
 		}
 	}
+	std::cout << "matchAnyOf (" << group.typeString << ") - No match found. Returning false." << std::endl;
 	return false;
 }
 
 bool regEx::matchScope(const Expression& scope, std::string::const_iterator& match){
+	
+	std::cout << "matchScope (" << scope.typeString << ") - Entered." << std::endl;
+	
 	// Starting index 1: directly after opening bracket. Length of size() - 2: length of full string excluding parenthesis.
 	std::vector<Expression> fullScope = parsePattern(scope.typeString.substr(1, scope.typeString.size() - 2));
 	std::vector<std::vector<Expression>::const_iterator> subScopes = {fullScope.begin()};
@@ -310,13 +327,22 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator& mat
 	while(currEnd != fullScope.cend()){
 		currEnd = subScopes[index + 1];
 		
-		std::cout << "Entered 308 While" << std::endl;
+		
+		std::string debugSubScopeString;
+		
+		for(std::vector<Expression>::const_iterator debugStart = currStart; debugStart != currEnd; ++debugStart){
+			debugSubScopeString += (*debugStart).typeString;
+		}
+		
+		std::cout << "matchScope (" << scope.typeString << ") - checking subscope of: " << debugSubScopeString << std::endl;
+		
 		
 		if (matchHere(currStart, currEnd, currMatch)){
-			std::cout << "Scope match complete. Current match is: " << *currMatch << std::endl;
+			std::cout << "matchScope (" << scope.typeString << ") - subscope of: \"" << debugSubScopeString << "\" match found. Returning true with a current match of: " << "'" << *matcch << "'." << std::endl;
 			match = currMatch - 1;
 			return true;
 		} else {
+			std::cout << "matchScope (" << scope.typeString << ") - subscope of: \"" << debugSubScopeString << "\" did not match." << *matcch << "'." << std::endl;
 			currMatch = match;
 		}
 		
@@ -324,6 +350,7 @@ bool regEx::matchScope(const Expression& scope, std::string::const_iterator& mat
 		currStart = currEnd + 1;
 		
 	}
+	std::cout << "matchScope (" << scope.typeString << ") - No matches found. Returning false. " << std::endl;
 	return false;
 }
 
@@ -335,6 +362,8 @@ bool regEx::postfixOneOrMore(std::vector<Expression>::const_iterator& exp, const
 	std::vector<Expression>::const_iterator nextExp = exp + 2;
 	std::string::const_iterator currMatch = match;
 	
+	std::cout << "postfixOneOrMore (" << (*exp).typeString << ") - entered." << std::endl;
+	
 	while(*currMatch != '\0' && matchExpression(exp, exp + 1, currMatch)){
 		++currMatch;
 	}
@@ -342,9 +371,13 @@ bool regEx::postfixOneOrMore(std::vector<Expression>::const_iterator& exp, const
 	while(currMatch != match){ // At least one functional match found.
 		--currMatch;
 		
-		if (matchHere(nextExp, end, currMatch)){
-			match = currMatch;
-			exp = nextExp;
+		std::string::const_iterator tempMatch = currMatch;
+		
+		std::cout << "postfixOneOrMore (" << (*exp).typeString << ") - checking possible match: '" << *currMatch << "'." << std::endl;
+		
+		if (matchHere(nextExp, end, tempMatch)){
+			match = tempMatch - 1;
+			exp = end - 1;
 			return true;
 		}
 	}
@@ -356,14 +389,13 @@ bool regEx::postfixOneOrMore(std::vector<Expression>::const_iterator& exp, const
 
 bool regEx::postfixZeroOrOne(std::vector<Expression>::const_iterator& exp, const std::vector<Expression>::const_iterator& end, std::string::const_iterator& match){
 	
+	std::cout << "postfixZeroOrOne (" << (*exp).typeString << ") - entered." << std::endl;
+	
 	std::vector<Expression>::const_iterator nextExp = exp + 2;
 	std::string::const_iterator currMatch = match;
 	
-		std::cout << "End of scope given to ZeroOrOne: " << (*(end - 1)).typeString << std::endl;
-	
 	if (matchHere(nextExp, end, currMatch)){
-		
-		std::cout << "Found to be a zero-match. (ZeroOrMore)" << std::endl; 
+		std::cout << "postfixZeroOrOne (" << (*exp).typeString << ") - Found to be a zero-match. Returning true." << std::endl;
 		
 		match = currMatch - 1;
 		exp = end - 1;
@@ -378,7 +410,7 @@ bool regEx::postfixZeroOrOne(std::vector<Expression>::const_iterator& exp, const
 
 		if (matchHere(nextExp, end, currMatch)){
 			
-			std::cout << "Found to be a one-match. (ZeroOrMore)" << std::endl;
+			std::cout << "postfixZeroOrOne (" << (*exp).typeString << ") - Found to be a one-match. Returning true." << std::endl;
 			
 			match = currMatch - 1;
 			exp = end - 1;
@@ -386,6 +418,7 @@ bool regEx::postfixZeroOrOne(std::vector<Expression>::const_iterator& exp, const
 		}
 	}
 	
+	std::cout << "postfixZeroOrOne (" << (*exp).typeString << ") - No match found. Returning false." << std::endl;
 	return false;
 	
 }
