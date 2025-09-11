@@ -368,7 +368,7 @@ bool regEx::postfixZeroOrOne(std::vector<Expression>::const_iterator& exp, const
 	}
 	
 	
-	if(nextExp != end && matchExpression(exp, exp + 1, currMatch))
+	if(nextExp != end && matchExpression(exp, exp + 1, currMatch)){
 		++currMatch;
 
 		if (matchHere(nextExp, end, currMatch)){
