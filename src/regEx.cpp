@@ -377,17 +377,16 @@ bool regEx::postfixOneOrMore(std::vector<Expression>::const_iterator& exp, const
 	}
 	
 	while(currMatch != match){ // At least one functional match found.
-		--currMatch;
-		
 		std::string::const_iterator tempMatch = currMatch;
 		
 		std::cout << "postfixOneOrMore (" << (*exp).typeString << ") - checking possible match: '" << *currMatch << "'." << std::endl;
 		
-		if (matchHere(exp, end, tempMatch)){
+		if (matchHere(nextExp, end, tempMatch)){
 			match = tempMatch - 1;
 			++exp;
 			return true;
 		}
+		--currMatch;
 	}
 	
 	return false;
