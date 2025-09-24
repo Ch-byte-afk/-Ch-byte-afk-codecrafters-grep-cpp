@@ -229,8 +229,6 @@ bool regEx::matchHere(std::vector<Expression>::const_iterator& exp, const std::v
 		break;
 	}
 	
-	
-	
 	if(exp == end){ //If end of scope was reached, success. All match.
 	
 		std::cout << "matchHere - Full match. Returning true." << std::endl;
@@ -385,9 +383,9 @@ bool regEx::postfixOneOrMore(std::vector<Expression>::const_iterator& exp, const
 		
 		std::cout << "postfixOneOrMore (" << (*exp).typeString << ") - checking possible match: '" << *currMatch << "'." << std::endl;
 		
-		if (matchHere(nextExp, end, tempMatch)){
+		if (matchHere(exp, end, tempMatch)){
 			match = tempMatch - 1;
-			exp = end - 1;
+			++exp;
 			return true;
 		}
 	}
