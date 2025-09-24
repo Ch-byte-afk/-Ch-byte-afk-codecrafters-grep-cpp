@@ -163,7 +163,6 @@ bool regEx::matchExpression(std::vector<Expression>::const_iterator& exp, const 
 	if (exp + 1 != end){
 		switch((*(exp + 1)).type){
 			
-			
 			case Expression::MATCH_ONE_OR_MORE:
 				std::cout << "matchExpression - One or More (+) postfix found. Processing postfix." << std::endl;
 				return postfixOneOrMore(exp, end, match);
